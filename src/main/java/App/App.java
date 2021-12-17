@@ -1,11 +1,14 @@
 package App;
 
+import App.LandingPage.LandingPage;
+
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class App {
     private static boolean programOn = true;
 
-    public void startProgram(){
+    public void startProgram() throws SQLException {
         System.out.println("program start");
 
         LandingPage start = new LandingPage();

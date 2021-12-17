@@ -1,13 +1,15 @@
-package App;
+package App.LandingPage;
 
 import App.App;
 
+import java.sql.SQLException;
+
 public class LandingPage {
-    public void menu(){
+    public void menu() throws SQLException {
         System.out.println("menu");
         programMenu();
     }
-    protected void programMenu(){
+    protected void programMenu() throws SQLException {
         System.out.println("Podaj co chcesz zrobić");
         System.out.println("""
                 1. login\s
@@ -16,13 +18,14 @@ public class LandingPage {
         menuOptions();
     }
 
-    protected void menuOptions(){
+    protected void menuOptions() throws SQLException {
         switch (App.readInt()) {
             case 1 -> {
                 login();
                 programMenu();
             }
             case 2 -> {
+                System.out.println("rejestracja");
                 register();
                 programMenu();
             }
@@ -43,11 +46,8 @@ public class LandingPage {
 //            UserPofile profile = new UserPofile();
 //            profile.profile(user);
         }
-    protected void register(){
-        System.out.println("rejestracja");
-
-//        System.out.println("rejestracja");
-//        Register register = new Register();
-//        register.registration();
+    protected void register() throws SQLException {
+        Registration register = new Registration();
+        register.registerNewUser();
     }
 }

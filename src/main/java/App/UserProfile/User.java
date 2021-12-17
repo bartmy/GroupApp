@@ -1,5 +1,6 @@
-package App;
+package App.UserProfile;
 
+import App.App;
 import lombok.*;
 
 @AllArgsConstructor
