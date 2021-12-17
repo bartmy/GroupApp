@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class App {
     private static boolean programOn = true;
 
-    public void startProgram() throws SQLException {
+    public void startProgram(){
         System.out.println("program start");
 
         LandingPage start = new LandingPage();

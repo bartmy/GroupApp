@@ -8,12 +8,18 @@ import java.sql.SQLException;
 public class Registration {
 
 
-    public void registerNewUser() throws SQLException {
+    public void registerNewUser() {
 //        User user2 = new User("username", "password");
         User user = new User();
         Database database = new Database();
+        String username = user.getUsername();
+        if (database.usernameAvailable(username)){
+            System.out.println("you have been added!");
+            database.addUserToDatabase(username, user.getPassword());
+        } else {
+            System.out.println("username taken, please select new");
+        }
 
-        database.addUserToDatabase(user.getUsername(), user.getPassword());
 
     }
     public void checkUsernameAvailability(){

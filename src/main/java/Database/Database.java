@@ -17,34 +17,52 @@ public class Database {
     /**
      adding new user to mysql database
      */
-    public void addUserToDatabase(String username, String password) throws SQLException {
+    public void addUserToDatabase(String username, String password) {
         updateStatement(
                 "INSERT INTO users(username, password) VALUES('" + username + "', '" + password + "');");
     }
-    public void usernameAvailability(String username){
-//        prepareAndExecuteStatement("SELECT username FROM users;");
 
-    }
-    public void usernameAvailability() throws SQLException {
-        connectToDatabase();
-        preparedStatement = connect
-                .prepareStatement("SELECT users.username FROM users;");
-        resultSet = preparedStatement.executeQuery();
-//        printUsersList(resultSet);
+    public boolean usernameAvailable(String username){
+        return lookForUsernameInDatabase(username) == 0;
 
     }
 
+    /**
+     0 - username not found
+     1 - username found = already taken
+     */
+    public Integer lookForUsernameInDatabase(String username){
+        int a = 2;
+        try {
+            connectToDatabase();
+            preparedStatement = connect.prepareStatement("SELECT COUNT(1)\n" +
+                            "FROM users\n" +
+                            "WHERE users.username = '" + username + "';");
+            resultSet = preparedStatement.executeQuery();
 
-    public void printUsersList() throws SQLException {
-        connectToDatabase();
-        preparedStatement = connect
-                .prepareStatement("SELECT users.username FROM users;");
-        resultSet = preparedStatement.executeQuery();
-//        printUsersList(resultSet);
+            while (resultSet.next()) {
+                a = resultSet.getInt("COUNT(1)");
+//                System.out.println("asd: " + a);
+            }
+        } catch (Exception e) {
+        }
+//        System.out.println("1 zajete 0 wolne" + a);
+        return a;
+    }
 
-        while (resultSet.next()) {
-            String username = resultSet.getString("username");
-            System.out.println("User: " + username);
+
+    public void printUsersList(){
+        try {
+            connectToDatabase();
+            preparedStatement = connect
+                    .prepareStatement("SELECT users.username FROM users;");
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String username = resultSet.getString("username");
+                System.out.println("User: " + username);
+            }
+        } catch (Exception e) {
         }
     }
 
@@ -64,15 +82,15 @@ public class Database {
     /**
      updating data in the database
      */
-    public void updateStatement(String ourPreparedStatement) throws SQLException {
+    public void updateStatement(String ourPreparedStatement){
         try {
             connectToDatabase();
             preparedStatement = connect.prepareStatement(ourPreparedStatement);
             preparedStatement.executeUpdate();
+            preparedStatement.close();
         } catch (Exception e) {
             throw new IllegalStateException("Cannot make an update!", e);
         }
-        preparedStatement.close();
     }
     /**
      connecting to database
@@ -84,6 +102,4 @@ public class Database {
             throw new IllegalStateException("Cannot connect to database!", e);
         }
     }
-
-
 }
