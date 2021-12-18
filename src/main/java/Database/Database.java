@@ -11,7 +11,7 @@ public class Database {
 
     private Connection connect = null;
     private PreparedStatement preparedStatement = null;
-//    private Statement statement = null;
+    private Statement statement = null;
     private ResultSet resultSet = null;
 
     /**
@@ -22,35 +22,54 @@ public class Database {
                 "INSERT INTO users(username, password) VALUES('" + username + "', '" + password + "');");
     }
 
-    public boolean usernameAvailable(String username){
-        return lookForUsernameInDatabase(username) == 0;
-
+    /**
+     * checking if provided username is already in the database
+     0 - username not found = available
+     1 - username found = already taken
+     */
+    public String getPasswordForUsernameInDatabase(String username){
+        int a = 2; // initializing value with random number, so it can be returned at the end of method
+        String pw = "";
+        try {
+            connectToDatabase();
+            preparedStatement = connect.prepareStatement(
+                    "SELECT users.password FROM users WHERE username = '" + username + "';");
+            resultSet = preparedStatement.executeQuery();
+            pw = resultSet.getString("password");
+        } catch (Exception e) {
+        }
+        return pw;
     }
 
     /**
-     0 - username not found
+     returning is username is available - used in Register class
+     */
+    public boolean usernameAvailable(String username){
+        return lookForUsernameInDatabase(username) == 0;
+    }
+
+    /**
+     * checking if provided username is already in the database
+     0 - username not found = available
      1 - username found = already taken
      */
     public Integer lookForUsernameInDatabase(String username){
-        int a = 2;
+        int a = 2; // initializing value with random number, so it can be returned at the end of method
         try {
             connectToDatabase();
             preparedStatement = connect.prepareStatement("SELECT COUNT(1)\n" +
                             "FROM users\n" +
                             "WHERE users.username = '" + username + "';");
             resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                a = resultSet.getInt("COUNT(1)");
-//                System.out.println("asd: " + a);
-            }
+            a = resultSet.getInt("COUNT(1)");
         } catch (Exception e) {
         }
-//        System.out.println("1 zajete 0 wolne" + a);
         return a;
     }
 
-
+    /**
+     for testing
+     */
     public void printUsersList(){
         try {
             connectToDatabase();
