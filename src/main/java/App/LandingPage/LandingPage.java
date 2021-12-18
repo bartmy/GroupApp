@@ -38,14 +38,10 @@ public class LandingPage {
     }
     protected void login(){
         System.out.println("login");
-//        Login login = new Login();
-//        String loginUsername = login.enterUsername();
-//
-//        if (login.loginValidation(loginUsername)){
-//            User user = login.getUser(loginUsername);
-//            UserPofile profile = new UserPofile();
-//            profile.profile(user);
-        }
+        Login login = new Login();
+        login.login();
+    }
+
     protected void register() {
         Registration register = new Registration();
         register.registerNewUser();

@@ -17,20 +17,19 @@ public class User {
         this.username = username;
         this.password = password;
     }
+    /**
+     used only to register user
+     */
     public User(){
-        newUser();
-    }
-    public void newUser(){
         readUsername();
         readPassword();
     }
-    public void readUsername(){
-        System.out.print("Username: ");
+    private void readUsername(){
+        System.out.print("user Username: ");
         this.username = App.readString();
     }
-    public void readPassword(){
-        System.out.print("Password: ");
+    private void readPassword(){
+        System.out.print("user Password: ");
         this.password = App.readString();
     }
-
 }

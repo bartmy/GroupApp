@@ -22,20 +22,17 @@ public class Database {
                 "INSERT INTO users(username, password) VALUES('" + username + "', '" + password + "');");
     }
 
-    /**
-     * checking if provided username is already in the database
-     0 - username not found = available
-     1 - username found = already taken
-     */
+
     public String getPasswordForUsernameInDatabase(String username){
-        int a = 2; // initializing value with random number, so it can be returned at the end of method
         String pw = "";
         try {
             connectToDatabase();
             preparedStatement = connect.prepareStatement(
                     "SELECT users.password FROM users WHERE username = '" + username + "';");
             resultSet = preparedStatement.executeQuery();
-            pw = resultSet.getString("password");
+            while (resultSet.next()) {
+                pw = resultSet.getString("password");
+            }
         } catch (Exception e) {
         }
         return pw;
@@ -44,8 +41,9 @@ public class Database {
     /**
      returning is username is available - used in Register class
      */
-    public boolean usernameAvailable(String username){
-        return lookForUsernameInDatabase(username) == 0;
+    public boolean usernameNotUsed(String username){
+        if (lookForUsernameInDatabase(username) == 0) return true;
+        else return false;
     }
 
     /**
@@ -61,9 +59,12 @@ public class Database {
                             "FROM users\n" +
                             "WHERE users.username = '" + username + "';");
             resultSet = preparedStatement.executeQuery();
-            a = resultSet.getInt("COUNT(1)");
+            while (resultSet.next()) {
+                a = resultSet.getInt("COUNT(1)");
+            }
         } catch (Exception e) {
         }
+        System.out.println(a);
         return a;
     }
 
