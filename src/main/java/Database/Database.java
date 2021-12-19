@@ -15,15 +15,9 @@ public class Database {
     private ResultSet resultSet = null;
 
     /**
-     adding new user to mysql database
+     gives password for requested user
      */
-    public void addUserToDatabase(String username, String password) {
-        updateStatement(
-                "INSERT INTO users(username, password) VALUES('" + username + "', '" + password + "');");
-    }
-
-
-    public String getPasswordForUsernameInDatabase(String username){
+    public String getPasswordForUsername(String username){
         String pw = "";
         try {
             connectToDatabase();
@@ -37,21 +31,26 @@ public class Database {
         }
         return pw;
     }
-
-    /**
-     returning is username is available - used in Register class
-     */
-    public boolean usernameNotUsed(String username){
-        if (lookForUsernameInDatabase(username) == 0) return true;
-        else return false;
+    public String getDataForUsername(String username, String whatToGet){
+        String var = "";
+        try {
+            connectToDatabase();
+            preparedStatement = connect.prepareStatement(
+                    "SELECT users." + whatToGet + " FROM users WHERE username = '" + username + "';");
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                var = resultSet.getString(""+ whatToGet);
+            }
+        } catch (Exception e) {
+        }
+        return var;
     }
-
     /**
      * checking if provided username is already in the database
      0 - username not found = available
      1 - username found = already taken
      */
-    public Integer lookForUsernameInDatabase(String username){
+    public Integer searchForUsername(String username){
         int a = 2; // initializing value with random number, so it can be returned at the end of method
         try {
             connectToDatabase();
@@ -107,7 +106,6 @@ public class Database {
             connectToDatabase();
             preparedStatement = connect.prepareStatement(ourPreparedStatement);
             preparedStatement.executeUpdate();
-            preparedStatement.close();
         } catch (Exception e) {
             throw new IllegalStateException("Cannot make an update!", e);
         }
