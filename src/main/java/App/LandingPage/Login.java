@@ -17,7 +17,7 @@ public class Login {
     }
 
     public void passwordValidation(String username, String password){
-        String pw = database.getPasswordForUsernameInDatabase(username);
+        String pw = database.getPasswordForUsername(username);
         if (password.equals(pw)){
             System.out.println("login poprawny");
             UserProfile up = new UserProfile();
