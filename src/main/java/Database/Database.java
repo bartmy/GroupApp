@@ -70,16 +70,23 @@ public class Database {
     /**
      for testing
      */
-    public void printUsersList(){
+    public void getUserGroups(String username){
         try {
             connectToDatabase();
             preparedStatement = connect
-                    .prepareStatement("SELECT users.username FROM users;");
+                    .prepareStatement("SELECT users.username, user_groups.group_name FROM users  \n" +
+                            "JOIN users_to_groups ON users.id = users_to_groups.user_id\n" +
+                            "JOIN user_groups ON users_to_groups.group_id = user_groups.id\n" +
+                            "WHERE users.username = '" + username + "'\n" +
+                            "GROUP BY user_groups.group_name \n" +
+                            ";");
             resultSet = preparedStatement.executeQuery();
-
+            System.out.println("Group name: ");
+            int lp = 0;
             while (resultSet.next()) {
-                String username = resultSet.getString("username");
-                System.out.println("User: " + username);
+                lp++;
+                String group_name  = resultSet.getString("group_name");
+                System.out.println(lp + ". " + group_name);
             }
         } catch (Exception e) {
         }

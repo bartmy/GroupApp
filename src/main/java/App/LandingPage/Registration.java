@@ -6,8 +6,6 @@ import Database.Database;
 public class Registration {
     Database database = new Database();
 
-
-
     public void registerNewUser() {
 //        User user2 = new User("username", "password");
         User user = new User();
@@ -22,14 +20,14 @@ public class Registration {
     /**
      adding new user to mysql database
      */
-    public void addUserToDatabase(String username, String password) {
+    private void addUserToDatabase(String username, String password) {
         database.updateStatement(
                 "INSERT INTO users(username, password) VALUES('" + username + "', '" + password + "');");
     }
     /**
      returning is username is available
      */
-    public boolean usernameNotUsed(String username){
+    private boolean usernameNotUsed(String username){
         if (database.searchForUsername(username) == 0) return true;
         else return false;
     }
