@@ -16,7 +16,7 @@ public class Login {
         passwordValidation(username, password);
     }
 
-    public void passwordValidation(String username, String password){
+    private void passwordValidation(String username, String password){
         String pw = database.getPasswordForUsername(username);
         if (password.equals(pw)){
             System.out.println("login poprawny");
@@ -27,5 +27,7 @@ public class Login {
         }
     }
 
-
+    public void testLogin(String username, String password){
+        passwordValidation(username, password);
+    }
 }

@@ -25,18 +25,14 @@ public class UserProfile {
         switch (App.App.readInt()){
             case 1:
                 System.out.println("pokaz moje dane");
-                System.out.println("username: " + user.getUsername() + "\n" +
-                        "password: " + user.getPassword() + "\n" +
-                        "displayName: " + user.getDisplayName() + "\n" +
-                        "email: " + user.getEmail() + "\n" +
-                        "");
-
+                printMyData(user);
                 break;
             case 2:
                 System.out.println("zmien dane");
                 break;
             case 3:
-                System.out.println("opcja 3");
+                System.out.println("moje grupy");
+                printMyGroups(user);
                 break;
             case 4:
                 System.out.println("opcja 4");
@@ -59,6 +55,18 @@ public class UserProfile {
                 break;
         }
     }
+    protected void printMyData(User user){
+        System.out.println("username: " + user.getUsername() + "\n" +
+                "password: " + user.getPassword() + "\n" +
+                "displayName: " + user.getDisplayName() + "\n" +
+                "email: " + user.getEmail() + "\n" +
+                "");
+    }
+    protected void printMyGroups(User user){
+        Group group = new Group();
+        group.printUsersGroups(user.getUsername());
+    }
+
 
     public void logout(){
         System.out.println("zostałeś pomyślnie wylogowany");

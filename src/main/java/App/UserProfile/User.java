@@ -22,6 +22,7 @@ public class User {
         this.password = password;
         this.displayName = readData(username, "displayName");
         this.email = readData(username, "email");
+        getID(username);
     }
     public void updateData(String whatToUpdate, String newValue){
         Database database = new Database();
@@ -33,6 +34,13 @@ public class User {
     public String readData(String username, String whatToGet){
         Database database = new Database();
         return database.getDataForUsername(username,whatToGet);
+    }
+    /**
+     created due to method readData work only for Strings
+     */
+    private void getID(String username){
+        String id = readData(username, "id");
+        this.userID = Integer.parseInt(id);
     }
 
     /**
