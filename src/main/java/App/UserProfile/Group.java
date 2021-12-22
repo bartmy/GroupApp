@@ -14,9 +14,12 @@ public class Group {
     private String groupName ="";
     private String owner = "";
 
-    public void newGroup(String username){
+    public void newGroup(User user){
         takeGroupName();
-        this.owner = username;
+        this.owner = user.getUsername();
+        addGroupToDatabase(getGroupName(), getOwner());
+        setGroupID(getGroupName());
+        linkGroupToUser(user.getUserID(), getGroupID());
     }
     private void takeGroupName(){
         System.out.print("Group name: ");
@@ -24,14 +27,23 @@ public class Group {
     }
     private void addGroupToDatabase(String groupName,String owner){
         Database database = new Database();
-//        database.updateStatement();
-
+        database.updateStatement(
+                "INSERT INTO user_groups(groupName, owner) " +
+                        "VALUES('" + groupName + "', '" + owner + "');");
     }
+    private void linkGroupToUser(int userID, int groupID){
+        Database database = new Database();
+        database.updateStatement(
+                "INSERT INTO users_to_groups(userID, groupID) " +
+                        "VALUES (" + userID + "," + groupID + ");");
+    }
+
+
     public void printUsersGroups(String username){
         Database database = new Database();
         database.getUserGroups(username);
     }
-    public String readData(String groupName, String whatToGet){
+    private String readData(String groupName, String whatToGet){
         Database database = new Database();
         return database.getDataFromDatabase(
                 "user_groups" ,whatToGet, "groupName", groupName);

@@ -22,7 +22,8 @@ public class Registration {
      */
     private void addUserToDatabase(String username, String password) {
         database.updateStatement(
-                "INSERT INTO users(username, password) VALUES('" + username + "', '" + password + "');");
+                "INSERT INTO users(username, password) " +
+                        "VALUES('" + username + "', '" + password + "');");
     }
     /**
      returning is username is available

@@ -29,7 +29,7 @@ public class UserProfile {
                 while(!stopChange) changeMenu(user);
             }
             case 3 -> printMyGroups(user);
-            case 4 -> System.out.println("4. utworz nową grupe");
+            case 4 -> newGroup(user);
             case 0 -> logout();
             default -> {
                 System.out.println("nie rozpoznano");
@@ -75,7 +75,7 @@ public class UserProfile {
 
     private void newGroup(User user){
         Group group = new Group();
-        group.newGroup(user.getUsername());
+        group.newGroup(user);
     }
 
 

@@ -54,7 +54,7 @@ public class User {
                 "WHERE username = '" + username + "';");
 
     }
-    public String readData(String username, String whatToGet){
+    private String readData(String username, String whatToGet){
         Database database = new Database();
         return database.getDataFromDatabase(
                 "users" ,whatToGet, "username", username);
