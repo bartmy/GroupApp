@@ -22,7 +22,9 @@ public class Database {
         try {
             connectToDatabase();
             preparedStatement = connect.prepareStatement(
-                    "SELECT users.password FROM users WHERE username = '" + username + "';");
+                    "SELECT users.password " +
+                            "FROM users " +
+                            "WHERE username = '" + username + "';");
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 pw = resultSet.getString("password");
@@ -31,12 +33,20 @@ public class Database {
         }
         return pw;
     }
-    public String getDataForUsername(String username, String whatToGet){
+
+    /**
+     * SELECT table.whatToGet
+     * FROM table
+     * WHERE whereKey = searchValue;
+     */
+    public String getDataFromDatabase(String table, String whatToGet, String whereKey, String searchValue){
         String var = "";
         try {
             connectToDatabase();
             preparedStatement = connect.prepareStatement(
-                    "SELECT users." + whatToGet + " FROM users WHERE username = '" + username + "';");
+                    "SELECT " + table + "." + whatToGet + " \n" +
+                            "FROM " + table + " \n" +
+                            "WHERE " + whereKey + " = '" + searchValue + "';");
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 var = resultSet.getString(""+ whatToGet);
@@ -74,19 +84,19 @@ public class Database {
         try {
             connectToDatabase();
             preparedStatement = connect
-                    .prepareStatement("SELECT users.username, user_groups.group_name FROM users  \n" +
-                            "JOIN users_to_groups ON users.id = users_to_groups.user_id\n" +
-                            "JOIN user_groups ON users_to_groups.group_id = user_groups.id\n" +
+                    .prepareStatement("SELECT users.username, user_groups.groupName FROM users  \n" +
+                            "JOIN users_to_groups ON users.id = users_to_groups.userID\n" +
+                            "JOIN user_groups ON users_to_groups.groupID = user_groups.id\n" +
                             "WHERE users.username = '" + username + "'\n" +
-                            "GROUP BY user_groups.group_name \n" +
+                            "GROUP BY user_groups.groupName \n" +
                             ";");
             resultSet = preparedStatement.executeQuery();
             System.out.println("Group name: ");
             int lp = 0;
             while (resultSet.next()) {
                 lp++;
-                String group_name  = resultSet.getString("group_name");
-                System.out.println(lp + ". " + group_name);
+                String groupName  = resultSet.getString("groupName");
+                System.out.println(lp + ". " + groupName);
             }
         } catch (Exception e) {
         }

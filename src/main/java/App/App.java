@@ -12,7 +12,9 @@ public class App {
         System.out.println("program start");
 
         LandingPage start = new LandingPage();
-        start.menu();
+        while (programOn){
+            start.menu();
+        }
     }
 
     // generic methods to be used frequently

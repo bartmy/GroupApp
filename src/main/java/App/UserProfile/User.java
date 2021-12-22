@@ -22,23 +22,47 @@ public class User {
         this.password = password;
         this.displayName = readData(username, "displayName");
         this.email = readData(username, "email");
-        getID(username);
+        setID(username);
     }
-    public void updateData(String whatToUpdate, String newValue){
+
+    public void updateUsername(String username){
+        System.out.print("New username: ");
+        String newUsername = App.readString();
+        updateUserData(username, "username", newUsername);
+    }
+    public void updatePassword(String username){
+        System.out.print("New password: ");
+        String newPassword = App.readString();
+        updateUserData(username, "password", newPassword);
+    }
+    public void updateDisplayName(String username){
+        System.out.print("New display name: ");
+        String newDisplayName = App.readString();
+        updateUserData(username, "displayName", newDisplayName);
+    }
+    public void updateEmail(String username){
+        System.out.print("New email: ");
+        String newEmail = App.readString();
+        updateUserData(username, "email", newEmail);
+    }
+
+    private void updateUserData(String username, String whatToUpdate, String newValue){
         Database database = new Database();
-        database.updateStatement("UPDATE users\n" +
+        database.updateStatement(
+                "UPDATE users\n" +
                 "SET " + whatToUpdate + " = '" + newValue + "'\n" +
-                "WHERE username = '" + getUsername() + "';");
+                "WHERE username = '" + username + "';");
 
     }
-    public String readData(String username, String whatToGet){
+    private String readData(String username, String whatToGet){
         Database database = new Database();
-        return database.getDataForUsername(username,whatToGet);
+        return database.getDataFromDatabase(
+                "users" ,whatToGet, "username", username);
     }
     /**
      created due to method readData work only for Strings
      */
-    private void getID(String username){
+    private void setID(String username){
         String id = readData(username, "id");
         this.userID = Integer.parseInt(id);
     }
@@ -63,6 +87,4 @@ public class User {
         System.out.print("user email: ");
         this.email = App.readString();
     }
-
-
 }
