@@ -31,12 +31,20 @@ public class Database {
         }
         return pw;
     }
-    public String getDataForUsername(String username, String whatToGet){
+
+    /**
+     * SELECT table.whatToGet
+     * FROM table
+     * WHERE whereKey = searchValue;
+     */
+    public String getDataFromDatabase(String table, String whatToGet, String whereKey, String searchValue){
         String var = "";
         try {
             connectToDatabase();
             preparedStatement = connect.prepareStatement(
-                    "SELECT users." + whatToGet + " FROM users WHERE username = '" + username + "';");
+                    "SELECT " + table + "." + whatToGet + " \n" +
+                            "FROM " + table + " \n" +
+                            "WHERE " + whereKey + " = '" + searchValue + "';");
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 var = resultSet.getString(""+ whatToGet);
