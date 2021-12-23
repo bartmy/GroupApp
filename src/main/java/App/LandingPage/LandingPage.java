@@ -2,19 +2,17 @@ package App.LandingPage;
 
 import App.App;
 
-import java.sql.SQLException;
-
 public class LandingPage {
     public void menu() {
         System.out.println("menu");
         programMenu();
     }
     protected void programMenu() {
-        System.out.println("Podaj co chcesz zrobić");
+        System.out.println("What do you want to do ?");
         System.out.println("""
                 1. login\s
-                2. rejestracja\s
-                3. koniec""");
+                2. register\s
+                3. end""");
         menuOptions();
     }
 
@@ -25,13 +23,13 @@ public class LandingPage {
                 programMenu();
             }
             case 2 -> {
-                System.out.println("rejestracja");
+                System.out.println("register");
                 register();
                 programMenu();
             }
             case 3 -> App.programEnd();
             default -> {
-                System.out.println("nie rozpoznano");
+                App.wrongChoice();
                 programMenu();
             }
         }

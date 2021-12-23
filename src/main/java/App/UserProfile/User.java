@@ -1,15 +1,17 @@
 package App.UserProfile;
 
 import App.App;
-import Database.Database;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @ToString
 @Getter
 @Setter
 
-public class User {
+public class User extends UserProfile{
     private String username;
     private String password;
     private int userID;
@@ -17,53 +19,47 @@ public class User {
     private String email = null;
 
 
-    public User(String username, String password){
+    protected User(String username, String password){
         this.username = username;
         this.password = password;
-        this.displayName = readData(username, "displayName");
-        this.email = readData(username, "email");
+        this.displayName = readUserData(username, "displayName");
+        this.email = readUserData(username, "email");
         setID(username);
     }
 
-    public void updateUsername(String username){
+    protected void updateUsername(String username){
         System.out.print("New username: ");
         String newUsername = App.readString();
         updateUserData(username, "username", newUsername);
     }
-    public void updatePassword(String username){
+    protected void updatePassword(String username){
         System.out.print("New password: ");
         String newPassword = App.readString();
         updateUserData(username, "password", newPassword);
     }
-    public void updateDisplayName(String username){
+    protected void updateDisplayName(String username){
         System.out.print("New display name: ");
         String newDisplayName = App.readString();
         updateUserData(username, "displayName", newDisplayName);
     }
-    public void updateEmail(String username){
+    protected void updateEmail(String username){
         System.out.print("New email: ");
         String newEmail = App.readString();
         updateUserData(username, "email", newEmail);
     }
 
     private void updateUserData(String username, String whatToUpdate, String newValue){
-        Database database = new Database();
-        database.updateStatement(
-                "UPDATE users\n" +
-                "SET " + whatToUpdate + " = '" + newValue + "'\n" +
-                "WHERE username = '" + username + "';");
-
+        updateData("users", whatToUpdate, newValue,"username",username);
     }
-    private String readData(String username, String whatToGet){
-        Database database = new Database();
-        return database.getDataFromDatabase(
-                "users" ,whatToGet, "username", username);
+
+    private String readUserData(String username, String whatToGet){
+        return readData("users", whatToGet, "username", username);
     }
     /**
      created due to method readData work only for Strings
      */
     private void setID(String username){
-        String id = readData(username, "id");
+        String id = readUserData(username, "id");
         this.userID = Integer.parseInt(id);
     }
 
@@ -73,18 +69,23 @@ public class User {
     public User(){
         readUsername();
         readPassword();
-        readEmail();
     }
     private void readUsername(){
-        System.out.print("user Username: ");
+        System.out.print("Username: ");
         this.username = App.readString();
     }
     private void readPassword(){
-        System.out.print("user Password: ");
+        System.out.print("Password: ");
         this.password = App.readString();
     }
     private void readEmail(){
-        System.out.print("user email: ");
+        System.out.print("Email: ");
         this.email = App.readString();
+    }
+    protected void emailValidation(String username){
+        if ((readUserData(username, "email")).isEmpty()){
+            System.out.println("you do not have email, please update it");
+            readEmail();
+        }
     }
 }

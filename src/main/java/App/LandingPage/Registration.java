@@ -6,7 +6,7 @@ import Database.Database;
 public class Registration {
     Database database = new Database();
 
-    public void registerNewUser() {
+    protected void registerNewUser() {
 //        User user2 = new User("username", "password");
         User user = new User();
         System.out.println("username from register: " + user.getUsername());
@@ -29,8 +29,7 @@ public class Registration {
      returning is username is available
      */
     private boolean usernameNotUsed(String username){
-        if (database.searchForUsername(username) == 0) return true;
-        else return false;
+        return database.isUsernameTaken(username) == 0;
     }
 
 }

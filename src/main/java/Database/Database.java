@@ -11,28 +11,7 @@ public class Database {
 
     private Connection connect = null;
     private PreparedStatement preparedStatement = null;
-    private Statement statement = null;
     private ResultSet resultSet = null;
-
-    /**
-     gives password for requested user
-     */
-    public String getPasswordForUsername(String username){
-        String pw = "";
-        try {
-            connectToDatabase();
-            preparedStatement = connect.prepareStatement(
-                    "SELECT users.password " +
-                            "FROM users " +
-                            "WHERE username = '" + username + "';");
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                pw = resultSet.getString("password");
-            }
-        } catch (Exception e) {
-        }
-        return pw;
-    }
 
     /**
      * SELECT table.whatToGet
@@ -52,6 +31,7 @@ public class Database {
                 var = resultSet.getString(""+ whatToGet);
             }
         } catch (Exception e) {
+            throw new IllegalStateException("getDataFromDatabase failed!", e);
         }
         return var;
     }
@@ -60,7 +40,7 @@ public class Database {
      0 - username not found = available
      1 - username found = already taken
      */
-    public Integer searchForUsername(String username){
+    public Integer isUsernameTaken(String username){
         int a = 2; // initializing value with random number, so it can be returned at the end of method
         try {
             connectToDatabase();
@@ -72,13 +52,14 @@ public class Database {
                 a = resultSet.getInt("COUNT(1)");
             }
         } catch (Exception e) {
+            throw new IllegalStateException("isUsernameTaken failed!", e);
         }
         System.out.println(a);
         return a;
     }
 
     /**
-     for testing
+     prints group names for selected user
      */
     public void getUserGroups(String username){
         try {
@@ -99,20 +80,7 @@ public class Database {
                 System.out.println(lp + ". " + groupName);
             }
         } catch (Exception e) {
-        }
-    }
-
-    /**
-     method created to shorten process of creating statements, not sure if required or there is other possibility to do the same
-     you can add your own exception
-     */
-    public void prepareAndExecuteStatement(String ourPreparedStatement, String ourException){
-        try {
-            connectToDatabase();
-            preparedStatement = connect.prepareStatement(ourPreparedStatement);
-            preparedStatement.executeUpdate();
-        } catch (Exception e) {
-            throw new IllegalStateException(ourException, e);
+            throw new IllegalStateException("getUserGroups failed!", e);
         }
     }
     /**
