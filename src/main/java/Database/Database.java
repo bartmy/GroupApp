@@ -1,6 +1,10 @@
 package Database;
 
+import lombok.SneakyThrows;
+
 import java.sql.*;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class Database {
@@ -83,6 +87,28 @@ public class Database {
             throw new IllegalStateException("getUserGroups failed!", e);
         }
     }
+//    public void getUserGroupsList(String username){
+//        try {
+//            connectToDatabase();
+//            preparedStatement = connect
+//                    .prepareStatement("SELECT users.username, user_groups.groupName FROM users  \n" +
+//                            "JOIN users_to_groups ON users.id = users_to_groups.userID\n" +
+//                            "JOIN user_groups ON users_to_groups.groupID = user_groups.id\n" +
+//                            "WHERE users.username = '" + username + "'\n" +
+//                            "GROUP BY user_groups.groupName \n" +
+//                            ";");
+//            resultSet = preparedStatement.executeQuery();
+//            while (resultSet.next()) {
+//
+//                Array groupName = resultSet.getArray("groupName");
+//                String[] nullable = (String[])groupName.getArray();
+//                System.out.println(Arrays.toString(nullable));
+//            }
+//        } catch (Exception e) {
+//            throw new IllegalStateException("getUserGroupsList failed!", e);
+//        }
+//
+//    }
     /**
      updating data in the database
      */

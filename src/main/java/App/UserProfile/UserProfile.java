@@ -3,6 +3,8 @@ package App.UserProfile;
 import App.App;
 import Database.Database;
 
+import java.sql.Array;
+
 public class UserProfile {
     private boolean profileLogout = false;
     private boolean previousStep = false;
@@ -75,8 +77,16 @@ public class UserProfile {
     private String chooseGroupToEdit(User user){
         printMyGroups(user);
         System.out.println("\n which group you want to edit ?");
+
         return "";
     }
+//    private Group chooseGroup(User user, int groupNumber){
+//        Database database = new Database();
+//        Array choice = database.getUserGroupsList(user.getUsername());
+//        return choice[groupNumber];
+//
+//
+//    }
     private void changeMenu(User user){
         System.out.println("""
 
