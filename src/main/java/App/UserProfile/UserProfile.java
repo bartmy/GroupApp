@@ -3,8 +3,6 @@ package App.UserProfile;
 import App.App;
 import Database.Database;
 
-import java.sql.Array;
-
 public class UserProfile {
     private boolean profileLogout = false;
     private boolean previousStep = false;
@@ -39,7 +37,8 @@ public class UserProfile {
             case 4 -> newGroup(user);
             case 5 -> {
                 while (!previousStep){
-                    menageGroups(user);
+                    Group group = new Group(chooseGroupToEdit(user));
+                    menageGroups(user, group);
                 }
             }
             case 0 -> logout();
@@ -49,14 +48,14 @@ public class UserProfile {
             }
         }
     }
-    private void menageGroups(User user){
-        Group group = new Group(chooseGroupToEdit(user));
+    private void menageGroups(User user, Group group){
         System.out.println("""
 
                  what do you want to change?\s
-                1. groupName\s
-                2. owner\s
-                3. add users\s
+                1. see group data\s
+                2. groupName\s
+                3. owner\s
+                4. add users\s
                 0. back""");
         menageGroupsOptions(user, group);
     }
@@ -64,29 +63,24 @@ public class UserProfile {
     private void menageGroupsOptions(User user, Group group){
         String groupName = group.getGroupName();
         switch (App.readInt()) {
-            case 1 -> group.updateGroupName(groupName);
-            case 2 -> group.updateOwner(groupName);
-            case 3 -> System.out.println("add users");
+            case 1 -> group.printGroupDetails(group);
+            case 2 -> group.updateGroupName(groupName);
+            case 3 -> group.updateOwner(groupName);
+            case 4 -> System.out.println("add users");
             case 0 -> previousStep();
             default -> {
                 App.wrongChoice();
-                menageGroups(user);
+                menageGroups(user, group);
             }
         }
     }
-    private String chooseGroupToEdit(User user){
-        printMyGroups(user);
-        System.out.println("\n which group you want to edit ?");
-
-        return "";
+    private Integer chooseGroupToEdit(User user){
+        Database database = new Database();
+        System.out.println("\n type ID of the group you want to edit ?");
+        database.pickMyGroupToEdit(user.getUsername());
+        return App.readInt();
     }
-//    private Group chooseGroup(User user, int groupNumber){
-//        Database database = new Database();
-//        Array choice = database.getUserGroupsList(user.getUsername());
-//        return choice[groupNumber];
-//
-//
-//    }
+
     private void changeMenu(User user){
         System.out.println("""
 

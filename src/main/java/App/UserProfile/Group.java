@@ -20,6 +20,11 @@ public class Group extends UserProfile{
         this.owner = readGroupData(groupName,"owner");
         getGroupID(groupName);
     }
+    protected Group(Integer groupID){
+        this.groupID = groupID;
+        this.groupName = readData("user_groups", "groupName", "id", ""+groupID);
+        this.owner = readGroupData(groupName,"owner");
+    }
 
     protected void updateGroupName(String groupName){
         System.out.print("New group name: ");
@@ -60,6 +65,11 @@ public class Group extends UserProfile{
         database.updateStatement(
                 "INSERT INTO users_to_groups(userID, groupID) " +
                         "VALUES (" + userID + "," + groupID + ");");
+    }
+    protected void printGroupDetails(Group group){
+        System.out.println("group name: " + this.groupName +
+                "Gropu ID: " + this.groupID +
+                "owner: " + this.owner);
     }
 
     protected void printUsersGroups(String username){
