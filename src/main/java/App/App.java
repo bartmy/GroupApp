@@ -2,7 +2,6 @@ package App;
 
 import App.LandingPage.LandingPage;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class App {
@@ -26,6 +25,9 @@ public class App {
     public static Integer readInt(){
         Scanner read = new Scanner(System.in);
         return read.nextInt();
+    }
+    public static void wrongChoice(){
+        System.out.println("did not recognize, try again!");
     }
     public static void programEnd(){
         programOn = false;

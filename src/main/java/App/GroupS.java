@@ -6,9 +6,9 @@ import Database.Database;
 
 public class GroupS {
     public static void main(String[] args) {
-//
-//        Database db = new Database();
-//        db.getPasswordForUsernameInDatabase("mysza");
+
+//        Database database = new Database();
+//        database.getUserGroups("bartekm");
 
 //        App appStart = new App();
 //        while (App.isProgramOn()){

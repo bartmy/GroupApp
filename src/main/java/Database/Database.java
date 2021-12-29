@@ -2,7 +2,6 @@ package Database;
 
 import java.sql.*;
 
-
 public class Database {
 
     String url = "jdbc:mysql://127.0.0.1:3306/groups-app";
@@ -11,28 +10,7 @@ public class Database {
 
     private Connection connect = null;
     private PreparedStatement preparedStatement = null;
-    private Statement statement = null;
     private ResultSet resultSet = null;
-
-    /**
-     gives password for requested user
-     */
-    public String getPasswordForUsername(String username){
-        String pw = "";
-        try {
-            connectToDatabase();
-            preparedStatement = connect.prepareStatement(
-                    "SELECT users.password " +
-                            "FROM users " +
-                            "WHERE username = '" + username + "';");
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                pw = resultSet.getString("password");
-            }
-        } catch (Exception e) {
-        }
-        return pw;
-    }
 
     /**
      * SELECT table.whatToGet
@@ -52,6 +30,7 @@ public class Database {
                 var = resultSet.getString(""+ whatToGet);
             }
         } catch (Exception e) {
+            throw new IllegalStateException("getDataFromDatabase failed!", e);
         }
         return var;
     }
@@ -60,7 +39,7 @@ public class Database {
      0 - username not found = available
      1 - username found = already taken
      */
-    public Integer searchForUsername(String username){
+    public Integer isUsernameTaken(String username){
         int a = 2; // initializing value with random number, so it can be returned at the end of method
         try {
             connectToDatabase();
@@ -72,13 +51,14 @@ public class Database {
                 a = resultSet.getInt("COUNT(1)");
             }
         } catch (Exception e) {
+            throw new IllegalStateException("isUsernameTaken failed!", e);
         }
         System.out.println(a);
         return a;
     }
 
     /**
-     for testing
+     prints group names for selected user
      */
     public void getUserGroups(String username){
         try {
@@ -99,20 +79,28 @@ public class Database {
                 System.out.println(lp + ". " + groupName);
             }
         } catch (Exception e) {
+            throw new IllegalStateException("getUserGroups failed!", e);
         }
     }
-
-    /**
-     method created to shorten process of creating statements, not sure if required or there is other possibility to do the same
-     you can add your own exception
-     */
-    public void prepareAndExecuteStatement(String ourPreparedStatement, String ourException){
+    public void pickMyGroupToEdit(String username){
         try {
             connectToDatabase();
-            preparedStatement = connect.prepareStatement(ourPreparedStatement);
-            preparedStatement.executeUpdate();
+            preparedStatement = connect
+                    .prepareStatement("SELECT users.username, user_groups.groupName, user_groups.id FROM users  \n" +
+                            "JOIN users_to_groups ON users.id = users_to_groups.userID\n" +
+                            "JOIN user_groups ON users_to_groups.groupID = user_groups.id\n" +
+                            "WHERE users.username = '" + username + "'\n" +
+                            "GROUP BY user_groups.groupName \n" +
+                            ";");
+            resultSet = preparedStatement.executeQuery();
+            System.out.println("Group name: ");
+            while (resultSet.next()) {
+                String groupName  = resultSet.getString("groupName");
+                String id  = resultSet.getString("id");
+                System.out.println(id + ". " + groupName);
+            }
         } catch (Exception e) {
-            throw new IllegalStateException(ourException, e);
+            throw new IllegalStateException("getUserGroups failed!", e);
         }
     }
     /**
