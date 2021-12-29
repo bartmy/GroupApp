@@ -57,6 +57,7 @@ public class UserProfile {
                 2. groupName\s
                 3. owner\s
                 4. add users\s
+                4. see members\s
                 0. back""");
         menageGroupsOptions(user, group);
     }
@@ -68,6 +69,7 @@ public class UserProfile {
             case 2 -> group.updateGroupName(groupName);
             case 3 -> group.updateOwner(groupName);
             case 4 -> System.out.println("add users");
+            case 5 -> group.printGroupMembers(groupName);
             case 0 -> previousStep();
             default -> {
                 App.wrongChoice();

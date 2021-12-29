@@ -66,12 +66,16 @@ public class Group extends UserProfile{
                 "INSERT INTO users_to_groups(userID, groupID) " +
                         "VALUES (" + userID + "," + groupID + ");");
     }
+
+    protected void printGroupMembers(String groupName){
+        Database database = new Database();
+        database.getGroupMembers(groupName);
+    }
     protected void printGroupDetails(Group group){
         System.out.println("group name: " + this.groupName +
                 "Group ID: " + this.groupID +
                 "owner: " + this.owner);
     }
-
     protected void printUsersGroups(String username){
         Database database = new Database();
         database.getUserGroups(username);
