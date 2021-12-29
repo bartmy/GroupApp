@@ -38,7 +38,8 @@ public class UserProfile {
             case 5 -> {
                 while (!previousStep){
                     Group group = new Group(chooseGroupToEdit(user));
-                    menageGroups(user, group);
+                    if (user.getUsername().equals(group.getOwner())) menageGroups(user, group);
+                    else System.out.println("you are not group owner");
                 }
             }
             case 0 -> logout();

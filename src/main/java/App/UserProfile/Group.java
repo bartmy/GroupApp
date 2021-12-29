@@ -68,7 +68,7 @@ public class Group extends UserProfile{
     }
     protected void printGroupDetails(Group group){
         System.out.println("group name: " + this.groupName +
-                "Gropu ID: " + this.groupID +
+                "Group ID: " + this.groupID +
                 "owner: " + this.owner);
     }
 

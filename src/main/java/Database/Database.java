@@ -1,11 +1,6 @@
 package Database;
 
-import lombok.SneakyThrows;
-
 import java.sql.*;
-import java.util.Arrays;
-import java.util.List;
-
 
 public class Database {
 
