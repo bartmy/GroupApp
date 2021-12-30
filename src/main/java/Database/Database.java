@@ -18,7 +18,7 @@ public class Database {
      * WHERE whereKey = searchValue;
      */
     public String getDataFromDatabase(String table, String whatToGet, String whereKey, String searchValue){
-        String var = "";
+        String str = "";
         try {
             connectToDatabase();
             preparedStatement = connect.prepareStatement(
@@ -27,12 +27,12 @@ public class Database {
                             "WHERE " + whereKey + " = '" + searchValue + "';");
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                var = resultSet.getString(""+ whatToGet);
+                str = resultSet.getString(""+ whatToGet);
             }
         } catch (Exception e) {
             throw new IllegalStateException("getDataFromDatabase failed!", e);
         }
-        return var;
+        return str;
     }
     /**
      * checking if provided username is already in the database

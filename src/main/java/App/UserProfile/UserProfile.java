@@ -38,8 +38,9 @@ public class UserProfile {
             case 5 -> {
                 while (!previousStep){
                     Group group = new Group(chooseGroupToEdit(user));
-                    if (user.getUsername().equals(group.getOwner())) menageGroups(user, group);
-                    else System.out.println("you are not group owner");
+                    if (user.getUsername().equals(group.getOwner())) {
+                        menageGroups(user, group);
+                    } else System.out.println("you are not group owner");
                 }
             }
             case 0 -> logout();
@@ -68,7 +69,7 @@ public class UserProfile {
             case 1 -> group.printGroupDetails(group);
             case 2 -> group.updateGroupName(groupName);
             case 3 -> group.updateOwner(groupName);
-            case 4 -> System.out.println("add users");
+            case 4 -> addGroupMember(group);
             case 5 -> group.printGroupMembers(groupName);
             case 0 -> previousStep();
             default -> {
@@ -108,6 +109,15 @@ public class UserProfile {
                 App.wrongChoice();
                 changeMenu(user);
             }
+        }
+    }
+    private void addGroupMember(Group group){
+        System.out.print("type username of user you want to add: ");
+        String newMember = App.readString();
+        Database database = new Database();
+        if (database.isUsernameTaken(newMember) == 0){
+            User user = new User(newMember);
+            group.addGroupMember(user.getUserID(), group.getGroupID());
         }
     }
     private void printMyData(User user){

@@ -40,6 +40,13 @@ public class Group extends UserProfile{
         updateData("user_groups", whatToUpdate, newValue,"groupName",groupName);
     }
 
+    protected void addGroupMember(Integer userID, Integer groupID){
+        Database database = new Database();
+        database.updateStatement(
+                "INSERT INTO users_to_groups(userID, groupID) " +
+                "VALUES (" + userID + "," + groupID + ");");
+    }
+
     /**
      only for creating groups
      */
@@ -72,9 +79,9 @@ public class Group extends UserProfile{
         database.getGroupMembers(groupName);
     }
     protected void printGroupDetails(Group group){
-        System.out.println("group name: " + this.groupName +
-                "Group ID: " + this.groupID +
-                "owner: " + this.owner);
+        System.out.println("group name: " + group.getGroupName() +
+                " Group ID: " + group.getGroupID() +
+                " owner: " + group.getOwner());
     }
     protected void printUsersGroups(String username){
         Database database = new Database();
