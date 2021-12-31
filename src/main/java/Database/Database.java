@@ -71,7 +71,6 @@ public class Database {
                             "GROUP BY user_groups.groupName \n" +
                             ";");
             resultSet = preparedStatement.executeQuery();
-            System.out.println("Group name: ");
             int lp = 0;
             while (resultSet.next()) {
                 lp++;

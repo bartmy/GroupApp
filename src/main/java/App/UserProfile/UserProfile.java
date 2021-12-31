@@ -29,18 +29,23 @@ public class UserProfile {
 
     private void menuOptions(User user){
         switch (App.readInt()) {
-            case 1 -> printMyData(user);
+            case 1 -> user.printMyData();
             case 2 -> {
-                while(!previousStep) changeMenu(user);
+                while(!previousStep) changeUserMenu(user);
             }
             case 3 -> printMyGroups(user);
             case 4 -> newGroup(user);
             case 5 -> {
                 while (!previousStep){
                     Group group = new Group(chooseGroupToEdit(user));
-                    if (user.getUsername().equals(group.getOwner())) {
-                        menageGroups(user, group);
-                    } else System.out.println("you are not group owner");
+                    while (!previousStep){
+                        if (user.getUsername().equals(group.getOwner())) {
+                            menageGroups(user, group);
+                        } else{
+                            System.out.println("you are not group owner");
+                            previousStep();
+                        }
+                    }
                 }
             }
             case 0 -> logout();
@@ -58,7 +63,7 @@ public class UserProfile {
                 2. groupName\s
                 3. owner\s
                 4. add users\s
-                4. see members\s
+                5. see members\s
                 0. back""");
         menageGroupsOptions(user, group);
     }
@@ -85,7 +90,7 @@ public class UserProfile {
         return App.readInt();
     }
 
-    private void changeMenu(User user){
+    private void changeUserMenu(User user){
         System.out.println("""
 
                  what do you want to change?\s
@@ -94,10 +99,10 @@ public class UserProfile {
                 3. display name\s
                 4. email\s
                 0. back""");
-        changeMenuOptions(user);
+        changeUserMenuOptions(user);
     }
 
-    private void changeMenuOptions(User user){
+    private void changeUserMenuOptions(User user){
         String username = user.getUsername();
         switch (App.readInt()) {
             case 1 -> user.updateUsername(username);
@@ -107,27 +112,27 @@ public class UserProfile {
             case 0 -> previousStep();
             default -> {
                 App.wrongChoice();
-                changeMenu(user);
+                changeUserMenu(user);
             }
         }
     }
+    /**
+     adding new member to chosen group
+     */
     private void addGroupMember(Group group){
         System.out.print("type username of user you want to add: ");
         String newMember = App.readString();
         Database database = new Database();
-        if (database.isUsernameTaken(newMember) == 0){
+        if (database.isUsernameTaken(newMember) == 1){
             User user = new User(newMember);
             group.addGroupMember(user.getUserID(), group.getGroupID());
-        }
+        }else System.out.println("addGroupMember failed");
     }
-    private void printMyData(User user){
-        System.out.println("username: " + user.getUsername() + "\n" +
-                "password: " + user.getPassword() + "\n" +
-                "displayName: " + user.getDisplayName() + "\n" +
-                "email: " + user.getEmail() + "\n" +
-                "");
-    }
+    /**
+     printing list of groups for chosen group
+     */
     private void printMyGroups(User user){
+        System.out.println("My groups");
         Group group = new Group();
         group.printUsersGroups(user.getUsername());
     }

@@ -34,6 +34,14 @@ public class User extends UserProfile{
         setID(username);
     }
 
+
+    protected void printMyData(){
+        System.out.println("username: " + getUsername() + "\n" +
+                "password: " + getPassword() + "\n" +
+                "displayName: " + getDisplayName() + "\n" +
+                "email: " + getEmail() + "\n" +
+                "");
+    }
     protected void updateUsername(String username){
         System.out.print("New username: ");
         String newUsername = App.readString();
