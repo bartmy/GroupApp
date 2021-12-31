@@ -6,7 +6,11 @@ import Database.Database;
 public class Registration {
     Database database = new Database();
 
-    protected void registerNewUser() {
+    public Registration(){
+        registerNewUser();
+    }
+
+    private void registerNewUser() {
 //        User user2 = new User("username", "password");
         User user = new User();
         System.out.println("username from register: " + user.getUsername());

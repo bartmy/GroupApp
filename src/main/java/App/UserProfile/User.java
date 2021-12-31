@@ -26,7 +26,22 @@ public class User extends UserProfile{
         this.email = readUserData(username, "email");
         setID(username);
     }
+    protected User(String username){
+        this.username = username;
+        this.password = readUserData(username, "password");
+        this.displayName = readUserData(username, "displayName");
+        this.email = readUserData(username, "email");
+        setID(username);
+    }
 
+
+    protected void printMyData(){
+        System.out.println("username: " + getUsername() + "\n" +
+                "password: " + getPassword() + "\n" +
+                "displayName: " + getDisplayName() + "\n" +
+                "email: " + getEmail() + "\n" +
+                "");
+    }
     protected void updateUsername(String username){
         System.out.print("New username: ");
         String newUsername = App.readString();

@@ -4,7 +4,6 @@ import App.App;
 import Database.Database;
 import lombok.*;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Getter
@@ -13,7 +12,7 @@ import lombok.*;
 public class Group extends UserProfile{
     private int groupID;
     private String groupName ="";
-    private String owner = "";
+    private String owner;
 
     protected Group(String groupName){
         this.groupName = groupName;
@@ -38,6 +37,13 @@ public class Group extends UserProfile{
     }
     private void updateGroupData(String groupName, String whatToUpdate, String newValue){
         updateData("user_groups", whatToUpdate, newValue,"groupName",groupName);
+    }
+
+    protected void addGroupMember(Integer userID, Integer groupID){
+        Database database = new Database();
+        database.updateStatement(
+                "INSERT INTO users_to_groups(userID, groupID) " +
+                "VALUES (" + userID + "," + groupID + ");");
     }
 
     /**
@@ -66,12 +72,16 @@ public class Group extends UserProfile{
                 "INSERT INTO users_to_groups(userID, groupID) " +
                         "VALUES (" + userID + "," + groupID + ");");
     }
-    protected void printGroupDetails(Group group){
-        System.out.println("group name: " + this.groupName +
-                "Group ID: " + this.groupID +
-                "owner: " + this.owner);
-    }
 
+    protected void printGroupMembers(String groupName){
+        Database database = new Database();
+        database.getGroupMembers(groupName);
+    }
+    protected void printGroupDetails(Group group){
+        System.out.println("group name: " + group.getGroupName() +
+                " Group ID: " + group.getGroupID() +
+                " owner: " + group.getOwner());
+    }
     protected void printUsersGroups(String username){
         Database database = new Database();
         database.getUserGroups(username);

@@ -18,7 +18,7 @@ public class Database {
      * WHERE whereKey = searchValue;
      */
     public String getDataFromDatabase(String table, String whatToGet, String whereKey, String searchValue){
-        String var = "";
+        String str = "";
         try {
             connectToDatabase();
             preparedStatement = connect.prepareStatement(
@@ -27,12 +27,12 @@ public class Database {
                             "WHERE " + whereKey + " = '" + searchValue + "';");
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                var = resultSet.getString(""+ whatToGet);
+                str = resultSet.getString(""+ whatToGet);
             }
         } catch (Exception e) {
             throw new IllegalStateException("getDataFromDatabase failed!", e);
         }
-        return var;
+        return str;
     }
     /**
      * checking if provided username is already in the database
@@ -71,7 +71,6 @@ public class Database {
                             "GROUP BY user_groups.groupName \n" +
                             ";");
             resultSet = preparedStatement.executeQuery();
-            System.out.println("Group name: ");
             int lp = 0;
             while (resultSet.next()) {
                 lp++;
@@ -100,7 +99,31 @@ public class Database {
                 System.out.println(id + ". " + groupName);
             }
         } catch (Exception e) {
-            throw new IllegalStateException("getUserGroups failed!", e);
+            throw new IllegalStateException("pickMyGroupToEdit failed!", e);
+        }
+    }
+
+    public void getGroupMembers(String groupName){
+        try {
+            connectToDatabase();
+            preparedStatement = connect
+                    .prepareStatement("SELECT user_groups.groupName, users.username, users.id FROM users\n" +
+                            "JOIN users_to_groups ON users.id = users_to_groups.userID\n" +
+                            "JOIN user_groups ON users_to_groups.groupID = user_groups.id\n" +
+                            "WHERE user_groups.groupName = '" + groupName + "'\n" +
+                            "GROUP BY users.username\n" +
+                            ";");
+            resultSet = preparedStatement.executeQuery();
+            System.out.println("Group name: ");
+            int lp = 0;
+            while (resultSet.next()) {
+                lp++;
+                String username  = resultSet.getString("username");
+                String id  = resultSet.getString("id");
+                System.out.println(lp + ". " + username + " id#" + id);
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException("getGroupMembers failed!", e);
         }
     }
     /**

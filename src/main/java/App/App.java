@@ -10,9 +10,8 @@ public class App {
     public void startProgram(){
         System.out.println("program start");
 
-        LandingPage start = new LandingPage();
         while (programOn){
-            start.menu();
+            new LandingPage();
         }
     }
 

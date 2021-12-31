@@ -2,10 +2,17 @@ package App.UserProfile;
 
 import App.App;
 import Database.Database;
+import lombok.*;
+
+@NoArgsConstructor
 
 public class UserProfile {
     private boolean profileLogout = false;
     private boolean previousStep = false;
+
+    public UserProfile(String username, String password){
+        startProfile(username, password);
+    }
 
     public void startProfile(String username, String password){
         while (!profileLogout){
@@ -29,17 +36,23 @@ public class UserProfile {
 
     private void menuOptions(User user){
         switch (App.readInt()) {
-            case 1 -> printMyData(user);
+            case 1 -> user.printMyData();
             case 2 -> {
-                while(!previousStep) changeMenu(user);
+                while(!previousStep) changeUserMenu(user);
             }
             case 3 -> printMyGroups(user);
             case 4 -> newGroup(user);
             case 5 -> {
                 while (!previousStep){
                     Group group = new Group(chooseGroupToEdit(user));
-                    if (user.getUsername().equals(group.getOwner())) menageGroups(user, group);
-                    else System.out.println("you are not group owner");
+                    while (!previousStep){
+                        if (user.getUsername().equals(group.getOwner())) {
+                            menageGroups(user, group);
+                        } else{
+                            System.out.println("you are not group owner");
+                            previousStep();
+                        }
+                    }
                 }
             }
             case 0 -> logout();
@@ -57,6 +70,7 @@ public class UserProfile {
                 2. groupName\s
                 3. owner\s
                 4. add users\s
+                5. see members\s
                 0. back""");
         menageGroupsOptions(user, group);
     }
@@ -67,7 +81,8 @@ public class UserProfile {
             case 1 -> group.printGroupDetails(group);
             case 2 -> group.updateGroupName(groupName);
             case 3 -> group.updateOwner(groupName);
-            case 4 -> System.out.println("add users");
+            case 4 -> addGroupMember(group);
+            case 5 -> group.printGroupMembers(groupName);
             case 0 -> previousStep();
             default -> {
                 App.wrongChoice();
@@ -82,7 +97,7 @@ public class UserProfile {
         return App.readInt();
     }
 
-    private void changeMenu(User user){
+    private void changeUserMenu(User user){
         System.out.println("""
 
                  what do you want to change?\s
@@ -91,10 +106,10 @@ public class UserProfile {
                 3. display name\s
                 4. email\s
                 0. back""");
-        changeMenuOptions(user);
+        changeUserMenuOptions(user);
     }
 
-    private void changeMenuOptions(User user){
+    private void changeUserMenuOptions(User user){
         String username = user.getUsername();
         switch (App.readInt()) {
             case 1 -> user.updateUsername(username);
@@ -104,18 +119,27 @@ public class UserProfile {
             case 0 -> previousStep();
             default -> {
                 App.wrongChoice();
-                changeMenu(user);
+                changeUserMenu(user);
             }
         }
     }
-    private void printMyData(User user){
-        System.out.println("username: " + user.getUsername() + "\n" +
-                "password: " + user.getPassword() + "\n" +
-                "displayName: " + user.getDisplayName() + "\n" +
-                "email: " + user.getEmail() + "\n" +
-                "");
+    /**
+     adding new member to chosen group
+     */
+    private void addGroupMember(Group group){
+        System.out.print("type username of user you want to add: ");
+        String newMember = App.readString();
+        Database database = new Database();
+        if (database.isUsernameTaken(newMember) == 1){
+            User user = new User(newMember);
+            group.addGroupMember(user.getUserID(), group.getGroupID());
+        }else System.out.println("addGroupMember failed");
     }
+    /**
+     printing list of groups for chosen group
+     */
     private void printMyGroups(User user){
+        System.out.println("My groups");
         Group group = new Group();
         group.printUsersGroups(user.getUsername());
     }
