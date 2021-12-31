@@ -4,7 +4,6 @@ import App.App;
 import Database.Database;
 import lombok.*;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Getter
@@ -13,7 +12,7 @@ import lombok.*;
 public class Group extends UserProfile{
     private int groupID;
     private String groupName ="";
-    private String owner = "";
+    private String owner;
 
     protected Group(String groupName){
         this.groupName = groupName;

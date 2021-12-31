@@ -7,7 +7,15 @@ import Database.Database;
 public class Login {
     Database database = new Database();
 
-    protected void login(){
+    public Login(){
+        login();
+    }
+
+    public Login(String username, String password){
+        testLogin(username, password);
+    }
+
+    private void login(){
         System.out.print("Username: ");
         String username = App.readString();
         System.out.print("Password: ");
@@ -20,8 +28,7 @@ public class Login {
         String pw = getPasswordForUsername(username);
         if (password.equals(pw)){
             System.out.println("login successful");
-            UserProfile up = new UserProfile();
-            up.startProfile(username, password);
+            new UserProfile(username, password);
         }else {
             System.out.println("wrong username or password");
         }

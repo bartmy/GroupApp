@@ -2,10 +2,17 @@ package App.UserProfile;
 
 import App.App;
 import Database.Database;
+import lombok.*;
+
+@NoArgsConstructor
 
 public class UserProfile {
     private boolean profileLogout = false;
     private boolean previousStep = false;
+
+    public UserProfile(String username, String password){
+        startProfile(username, password);
+    }
 
     public void startProfile(String username, String password){
         while (!profileLogout){
