@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 
-public class Group extends UserProfile{
+public class Group extends Profile {
     private int groupID;
     private String groupName ="";
     private String owner;
@@ -25,32 +25,34 @@ public class Group extends UserProfile{
         this.owner = readGroupData(groupName,"owner");
     }
 
-    protected void updateGroupName(String groupName){
-        System.out.print("New group name: ");
-        String newGroupName = App.readString();
-        updateGroupData(groupName,"groupName",newGroupName);
-    }
-    protected void updateOwner(String owner){
-        System.out.print("New owner: ");
-        String newOwner = App.readString();
-        updateGroupData(owner,"owner", newOwner);
-    }
-    private void updateGroupData(String groupName, String whatToUpdate, String newValue){
-        updateData("user_groups", whatToUpdate, newValue,"groupName",groupName);
-    }
-
-    protected void addGroupMember(Integer userID, Integer groupID){
+    protected void printGroupMembers(String groupName){
         Database database = new Database();
-        database.updateStatement(
-                "INSERT INTO users_to_groups(userID, groupID) " +
-                "VALUES (" + userID + "," + groupID + ");");
+        database.getGroupMembers(groupName);
     }
-
+    protected void printGroupDetails(Group group){
+        System.out.println("group name: " + group.getGroupName() +
+                " Group ID: " + group.getGroupID() +
+                " owner: " + group.getOwner());
+    }
+    protected void printUsersGroups(String username){
+        Database database = new Database();
+        database.getUserGroups(username);
+    }
+    private String readGroupData(String groupName, String whatToGet){
+        return readData("user_groups", whatToGet, "groupName", groupName);
+    }
     /**
      only for creating groups
      */
     protected Group(User user){
         takeGroupName();
+        this.owner = user.getUsername();
+        addGroupToDatabase(getGroupName(), getOwner());
+        getGroupID(getGroupName());
+        linkGroupToUser(user.getUserID(), getGroupID());
+    }
+    protected Group(User user, String groupName){
+        this.groupName = groupName;
         this.owner = user.getUsername();
         addGroupToDatabase(getGroupName(), getOwner());
         getGroupID(getGroupName());
@@ -73,22 +75,6 @@ public class Group extends UserProfile{
                         "VALUES (" + userID + "," + groupID + ");");
     }
 
-    protected void printGroupMembers(String groupName){
-        Database database = new Database();
-        database.getGroupMembers(groupName);
-    }
-    protected void printGroupDetails(Group group){
-        System.out.println("group name: " + group.getGroupName() +
-                " Group ID: " + group.getGroupID() +
-                " owner: " + group.getOwner());
-    }
-    protected void printUsersGroups(String username){
-        Database database = new Database();
-        database.getUserGroups(username);
-    }
-    private String readGroupData(String groupName, String whatToGet){
-        return readData("user_groups", whatToGet, "groupName", groupName);
-    }
     /**
      created due to method readData work only for Strings
      */

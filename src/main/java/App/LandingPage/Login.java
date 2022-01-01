@@ -1,34 +1,27 @@
 package App.LandingPage;
 
 import App.App;
-import App.UserProfile.UserProfile;
+import App.UserProfile.Profile;
 import Database.Database;
 
 public class Login {
     Database database = new Database();
 
-    public Login(){
-        login();
-    }
-
-    public Login(String username, String password){
-        testLogin(username, password);
-    }
-
-    private void login(){
+    private void startLogin(){
         System.out.print("Username: ");
         String username = App.readString();
         System.out.print("Password: ");
         String password = App.readString();
 
-        passwordValidation(username, password);
+        passwordValidation(username, password); // after successful validation userProfile is triggered
     }
 
     private void passwordValidation(String username, String password){
         String pw = getPasswordForUsername(username);
         if (password.equals(pw)){
             System.out.println("login successful");
-            new UserProfile(username, password);
+            Profile profile = new Profile();
+            profile.startProfile(username, password);
         }else {
             System.out.println("wrong username or password");
         }

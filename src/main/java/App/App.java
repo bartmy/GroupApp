@@ -11,7 +11,8 @@ public class App {
         System.out.println("program start");
 
         while (programOn){
-            new LandingPage();
+            LandingPage landingPage = new LandingPage();
+            landingPage.startLandingPage();
         }
     }
 

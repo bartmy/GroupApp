@@ -4,13 +4,7 @@ import App.App;
 
 public class LandingPage {
 
-    public LandingPage(){
-        menu();
-    }
-
-
-    private void menu() {
-        System.out.println("menu");
+    public void startLandingPage() {
         programMenu();
     }
     private void programMenu() {

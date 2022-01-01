@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 
-public class User extends UserProfile{
+public class User extends Profile {
     private String username;
     private String password;
     private int userID;
@@ -41,30 +41,6 @@ public class User extends UserProfile{
                 "displayName: " + getDisplayName() + "\n" +
                 "email: " + getEmail() + "\n" +
                 "");
-    }
-    protected void updateUsername(String username){
-        System.out.print("New username: ");
-        String newUsername = App.readString();
-        updateUserData(username, "username", newUsername);
-    }
-    protected void updatePassword(String username){
-        System.out.print("New password: ");
-        String newPassword = App.readString();
-        updateUserData(username, "password", newPassword);
-    }
-    protected void updateDisplayName(String username){
-        System.out.print("New display name: ");
-        String newDisplayName = App.readString();
-        updateUserData(username, "displayName", newDisplayName);
-    }
-    protected void updateEmail(String username){
-        System.out.print("New email: ");
-        String newEmail = App.readString();
-        updateUserData(username, "email", newEmail);
-    }
-
-    private void updateUserData(String username, String whatToUpdate, String newValue){
-        updateData("users", whatToUpdate, newValue,"username",username);
     }
 
     private String readUserData(String username, String whatToGet){
