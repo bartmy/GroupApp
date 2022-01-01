@@ -10,6 +10,7 @@ public class GroupS {
 //            appStart.startProgram();
 //        }
 
-        new Login("bartekm","haslo");
+        Login login = new Login();
+        login.testLogin("bartekm", "haslo");
     }
 }
