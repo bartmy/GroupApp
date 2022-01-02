@@ -9,7 +9,7 @@ public class GroupS {
 //        while (App.isProgramOn()){
 //            appStart.startProgram();
 //        }
-        System.out.println("test if we see this in jira");
+        System.out.println("test if we see this in shortcut");
         System.out.println("test2");
         System.out.println("test3");
 
