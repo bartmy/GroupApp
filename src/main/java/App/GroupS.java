@@ -9,6 +9,7 @@ public class GroupS {
 //        while (App.isProgramOn()){
 //            appStart.startProgram();
 //        }
+        System.out.println("test if we see this in jira");
 
         Login login = new Login();
         login.testLogin("bartekm", "haslo");
