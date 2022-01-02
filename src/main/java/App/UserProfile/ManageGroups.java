@@ -13,7 +13,7 @@ public class ManageGroups extends ProfileMenu{
     private void menageGroups(User user, Group group){
         System.out.println("""
 
-                 what do you want to change?\s
+                 what do you want to do?\s
                 1. see members\s
                 2. add users\s
                 3. see group data\s
@@ -29,8 +29,13 @@ public class ManageGroups extends ProfileMenu{
             case 2 -> addGroupMember(group);
             case 3 -> group.printGroupDetails(group);
             case 4 -> {
-                GroupChange groupChange = new GroupChange();
-                groupChange.startGroupChange(group);
+                if (user.getUsername().equals(group.getOwner())) {
+                    GroupChange groupChange = new GroupChange();
+                    groupChange.startGroupChange(group);
+                }else{
+                    System.out.println("you are not group owner");
+//                    previousStep();
+                }
             }
             case 0 -> previousStep();
             default -> {

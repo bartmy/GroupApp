@@ -1,6 +1,7 @@
 package App;
 
 import App.LandingPage.Login;
+import Database.Database;
 
 public class GroupS {
     public static void main(String[] args) {

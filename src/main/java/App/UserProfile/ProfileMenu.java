@@ -51,11 +51,14 @@ public class ProfileMenu extends Profile {
             previousStep();
         }else {
             Group group = new Group(choice);
-            if (user.getUsername().equals(group.getOwner())) {
+            Database database = new Database();
+
+//            if (user.getUsername().equals(group.getOwner())) {
+            if (database.getGroupMembersList(group.getGroupName()).contains(user.getUsername())) {
                 ManageGroups manageGroups = new ManageGroups();
                 manageGroups.startManageGroups(user, group);
             }else{
-                System.out.println("you are not group owner");
+                System.out.println("wrong ID, please try again");
                 previousStep();
             }
         }

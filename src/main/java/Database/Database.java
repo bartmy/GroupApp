@@ -1,6 +1,7 @@
 package Database;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Database {
 
@@ -114,7 +115,7 @@ public class Database {
                             "GROUP BY users.username\n" +
                             ";");
             resultSet = preparedStatement.executeQuery();
-            System.out.println("Group name: ");
+            System.out.println("Group members: username, userID");
             int lp = 0;
             while (resultSet.next()) {
                 lp++;
@@ -125,6 +126,27 @@ public class Database {
         } catch (Exception e) {
             throw new IllegalStateException("getGroupMembers failed!", e);
         }
+    }
+    public ArrayList<String> getGroupMembersList(String groupName){
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            connectToDatabase();
+            preparedStatement = connect
+                    .prepareStatement("SELECT user_groups.groupName, users.username, users.id FROM users\n" +
+                            "JOIN users_to_groups ON users.id = users_to_groups.userID\n" +
+                            "JOIN user_groups ON users_to_groups.groupID = user_groups.id\n" +
+                            "WHERE user_groups.groupName = '" + groupName + "'\n" +
+                            "GROUP BY users.username\n" +
+                            ";");
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String username  = resultSet.getString("username");
+                list.add(username);
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException("getGroupMembersList failed!", e);
+        }
+        return list;
     }
     /**
      updating data in the database
@@ -137,6 +159,24 @@ public class Database {
         } catch (Exception e) {
             throw new IllegalStateException("Cannot make an update!", e);
         }
+    }
+    public Integer getGroupSize(String groupName){
+        String str = "";
+        try {
+            connectToDatabase();
+            preparedStatement = connect.prepareStatement(
+                    "SELECT user_groups.groupName, COUNT(user_groups.groupName) AS numberOfMembers FROM users  \n" +
+                            "JOIN users_to_groups ON users.id = users_to_groups.userID\n" +
+                            "JOIN user_groups ON users_to_groups.groupID = user_groups.id\n" +
+                            "WHERE user_groups.groupName = '" + groupName + "';");
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                str = resultSet.getString("numberOfMembers");
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException("getDataFromDatabase failed!", e);
+        }
+        return Integer.parseInt(str);
     }
     /**
      connecting to database
