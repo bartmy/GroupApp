@@ -16,8 +16,9 @@ public class ManageGroups extends ProfileMenu{
                  what do you want to do?\s
                 1. see members\s
                 2. add users\s
-                3. see group data\s
-                4. change group info\s
+                3. pending invites\s
+                4. see group data\s
+                5. change group info\s
                 0. back""");
         manageGroupsOptions(user, group);
     }
@@ -27,8 +28,9 @@ public class ManageGroups extends ProfileMenu{
         switch (App.readInt()) {
             case 1 -> group.printGroupMembers(groupName);
             case 2 -> addGroupMember(group);
-            case 3 -> group.printGroupDetails(group);
-            case 4 -> {
+            case 3 -> System.out.println("pending invites");
+            case 4 -> group.printGroupDetails(group);
+            case 5 -> {
                 if (user.getUsername().equals(group.getOwner())) {
                     GroupChange groupChange = new GroupChange();
                     groupChange.startGroupChange(group);

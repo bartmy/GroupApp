@@ -21,8 +21,9 @@ public class ProfileMenu extends Profile {
                 1. my data\s
                 2. change my data\s
                 3. my groups\s
-                4. enter group\s
-                5. create new group\s
+                4. join group\s
+                5. enter group\s
+                6. create new group\s
                 0. logout""");
         menuOptions(user);
     }
@@ -34,8 +35,9 @@ public class ProfileMenu extends Profile {
                 userChange.startUserChange(user);
             }
             case 3 -> printMyGroups(user);
-            case 4 -> enterGroup(user);
-            case 5 -> {
+            case 4 -> System.out.println("join group");
+            case 5 -> enterGroup(user);
+            case 6 -> {
                 while(!previousStep) newGroup(user);
             }
             case 0 -> logout();
