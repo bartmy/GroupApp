@@ -16,6 +16,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <jettyVersion>11.0.7</jettyVersion>
         <slf4jVersion>1.7.32</slf4jVersion>
+        <junit.version>4.13.2</junit.version>
     </properties>
 
     <dependencies>
@@ -39,7 +40,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13.2</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
 
