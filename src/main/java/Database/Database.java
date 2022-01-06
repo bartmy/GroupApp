@@ -37,7 +37,7 @@ public class Database {
     }
     /**
      * checking if provided username is already in the database
-     0 - username not found = available
+     0 - username not found = not taken
      1 - username found = already taken
      */
     public Integer isUsernameTaken(String username){
@@ -53,6 +53,28 @@ public class Database {
             }
         } catch (Exception e) {
             throw new IllegalStateException("isUsernameTaken failed!", e);
+        }
+        System.out.println(a);
+        return a;
+    }
+    /**
+     * checking if provided groupName is already in the database
+     0 - groupName not found = not taken
+     1 - groupName found = already taken
+     */
+    public Integer checkForGroup(String groupName){
+        int a = 2; // initializing value with random number, so it can be returned at the end of method
+        try {
+            connectToDatabase();
+            preparedStatement = connect.prepareStatement("SELECT COUNT(1)\n" +
+                            "FROM user_groups\n" +
+                            "WHERE user_groups.groupName = '" + groupName + "';");
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                a = resultSet.getInt("COUNT(1)");
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException("isGroupAvailable failed!", e);
         }
         System.out.println(a);
         return a;
@@ -177,6 +199,56 @@ public class Database {
             throw new IllegalStateException("getDataFromDatabase failed!", e);
         }
         return Integer.parseInt(str);
+    }
+    /**
+     application from users to join certain group
+     */
+    public void getPendingApplications(String groupName){
+        try {
+            connectToDatabase();
+            preparedStatement = connect
+                    .prepareStatement("SELECT users.username, user_groups.groupName FROM users  \n" +
+                            "JOIN pending_invites ON users.id = pending_invites.userID\n" +
+                            "JOIN user_groups ON pending_invites.groupID = user_groups.id\n" +
+                            "WHERE user_groups.groupName = '" + groupName + "'\n" +
+                            "GROUP BY pending_invites.id \n" +
+                            ";");
+            resultSet = preparedStatement.executeQuery();
+            int lp = 0;
+            while (resultSet.next()) {
+                lp++;
+                String username  = resultSet.getString("username");
+                String id  = resultSet.getString("id");
+                System.out.println(lp + ". " + username + " id#" + id);
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException("getPendingApplications failed!", e);
+        }
+    }
+    /**
+     invitations of user to join different groups
+     */
+    public void getPendingInvitations(String username){
+        try {
+            connectToDatabase();
+            preparedStatement = connect
+                    .prepareStatement("SELECT users.username, user_groups.groupName FROM users  \n" +
+                            "JOIN pending_invites ON users.id = pending_invites.userID\n" +
+                            "JOIN user_groups ON pending_invites.groupID = user_groups.id\n" +
+                            "WHERE user_groups.groupName = '" + username + "'\n" +
+                            "GROUP BY pending_invites.id \n" +
+                            ";");
+            resultSet = preparedStatement.executeQuery();
+            int lp = 0;
+            while (resultSet.next()) {
+                lp++;
+                String groupName  = resultSet.getString("groupName");
+                String id  = resultSet.getString("id");
+                System.out.println(lp + ". " + groupName + " id#" + id);
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException("getPendingInvitations failed!", e);
+        }
     }
     /**
      connecting to database

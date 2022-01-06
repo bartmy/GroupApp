@@ -35,7 +35,7 @@ public class ProfileMenu extends Profile {
                 userChange.startUserChange(user);
             }
             case 3 -> printMyGroups(user);
-            case 4 -> System.out.println("join group");
+            case 4 -> joinGroup(user);
             case 5 -> enterGroup(user);
             case 6 -> {
                 while(!previousStep) newGroup(user);
@@ -47,6 +47,22 @@ public class ProfileMenu extends Profile {
             }
         }
     }
+    private void joinGroup(User user){
+        InviteJoinGroup invite = new InviteJoinGroup();
+        System.out.print("0 to see pending invites or type name of group you want to join: ");
+        String groupName = App.readString();
+        if (groupName.equals("0")){
+            invite.getUserPendingInvites(user.getUsername());
+        }else{
+            Database database = new Database();
+            if (database.checkForGroup(groupName) == 1){
+                invite.joinGroup(user, groupName);
+            }else System.out.println("no group with provided name");
+        }
+
+
+    }
+
     private void enterGroup(User user){
         int choice = chooseGroupToEdit(user);
         if (choice==0){

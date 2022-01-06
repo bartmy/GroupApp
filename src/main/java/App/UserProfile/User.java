@@ -1,12 +1,10 @@
 package App.UserProfile;
 
 import App.App;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @Getter
 @Setter
@@ -57,7 +55,7 @@ public class User extends Profile {
     /**
      used only to register user
      */
-    public User(){
+    public void registerUser(){
         readUsername();
         readPassword();
     }
