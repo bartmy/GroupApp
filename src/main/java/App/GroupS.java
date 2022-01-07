@@ -12,6 +12,7 @@ public class GroupS {
 //        }
 
         Login login = new Login();
-        login.testLogin("bartekm", "haslo");
+//        login.testLogin("bartekm", "haslo");
+        login.testLogin("kuccu", "niebieski");
     }
 }

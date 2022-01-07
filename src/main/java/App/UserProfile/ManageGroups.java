@@ -50,10 +50,11 @@ public class ManageGroups extends ProfileMenu{
      */
     private void addGroupMember(Group group){
         InviteJoinGroup invite = new InviteJoinGroup();
-        System.out.print("0 to see pending invites or type name of group you want to join: ");
+        System.out.print("0 to see pending invites or type name of user you want to invite: ");
         String username = App.readString();
         if (username.equals("0")){
-            invite.getGroupPendingInvites(group.getGroupName());
+            User user = new User(username);
+            invite.forGroupInvite(group, user);
         }else{
             Database database = new Database();
             if (database.isUsernameTaken(username) == 1){

@@ -29,39 +29,63 @@ public class InviteJoinGroup {
             throw new IllegalStateException("joinGroup failed", e);
         }
     }
-    private void acceptInvite(Group group, User user){
-        Database database = new Database();
-        database.updateStatement(
-                "INSERT INTO users_to_groups(userID, groupID) " +
+    private void acceptInvite(Group group, User user, Integer id){
+        try {
+            Database database = new Database();
+            database.updateStatement(
+                    "INSERT INTO users_to_groups(userID, groupID) " +
                         "VALUES (" + user.getUserID() + "," + group.getGroupID() + ");");
-        database.updateStatement(
-                "DELETE FROM pending_invites\n" +
-                        "where userID = " + user.getUserID() + " and groupID = " + group.getGroupID() + ";");
-        System.out.println("approved");
+            database.updateStatement(
+                    "DELETE FROM pending_invites\n" +
+                        "where id = " + id + " and userID = " + user.getUserID() + " and groupID = " + group.getGroupID() + ";");
+            System.out.println("approved");
+        }catch (Exception e) {
+            System.out.println("acceptInvite failed");
+        }
     }
-    private void rejectInvite(Group group, User user){
-        Database database = new Database();
-        database.updateStatement(
-                "DELETE FROM pending_invites\n" +
-                        "where userID = " + user.getUserID() + " and groupID = " + group.getGroupID() + ";");
-        System.out.println("rejected");
+    private void rejectInvite(Group group, User user, Integer id){
+        try {
+            Database database = new Database();
+            database.updateStatement(
+                    "DELETE FROM pending_invites\n" +
+                        "where id = " + id + " and userID = " + user.getUserID() + " and groupID = " + group.getGroupID() + ";");
+            System.out.println("rejected");
+        }catch (Exception e) {
+            System.out.println("rejectInvite failed");
+        }
     }
-    protected void takeActionOnInvite(Group group, User user){
+    private void takeActionOnInvite(Group group, User user, Integer id){
         System.out.println("1 accept / 2 reject / 0 back");
         switch (App.readInt()) {
-            case 1 -> acceptInvite(group, user);
-            case 2 -> rejectInvite(group, user);
+            case 1 -> acceptInvite(group, user, id);
+            case 2 -> rejectInvite(group, user, id);
             case 0 -> System.out.println("leave 0 ");
             default -> System.out.println("leave");
         }
     }
-    protected void getUserPendingInvites(String username){
+    protected void getUserPendingInvites(User user){
         Database database = new Database();
-        database.getPendingInvitations(username);
+        database.getPendingInvitations(user.getUsername());
     }
-    protected void getGroupPendingInvites(String groupName){
+    private void getGroupPendingInvites(Group group){
         Database database = new Database();
-        database.getPendingApplications(groupName);
+        System.out.println("pending invites to join " + group.getGroupName() + ": ");
+        database.getPendingApplications(group.getGroupName());
+    }
+    private Integer inviteChoice(){
+        System.out.println("which id# you want to accept/reject ");
+        return App.readInt();
+    }
+
+    protected void forGroupInvite(Group group, User user){
+        getGroupPendingInvites(group);
+        int choice = inviteChoice();
+        takeActionOnInvite(group, user, choice);
+    }
+    protected void forUserInvite(User user){
+        getUserPendingInvites(user);
+        int choice = inviteChoice();
+        takeActionOnInvite(group, user, choice);
     }
 
 }

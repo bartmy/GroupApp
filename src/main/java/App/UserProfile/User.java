@@ -72,7 +72,7 @@ public class User extends Profile {
         this.email = App.readString();
     }
     protected void emailValidation(String username){
-        if ((readUserData(username, "email")).isEmpty()){
+        if ((readUserData(username, "email")) == null){
             System.out.println("you do not have email, please update it");
             readEmail();
         }
