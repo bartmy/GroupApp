@@ -29,6 +29,10 @@ public class Group extends Profile {
         Database database = new Database();
         database.getGroupMembers(groupName);
     }
+    protected void groupSize(String groupName){
+        Database database = new Database();
+        database.getGroupMembers(groupName);
+    }
     protected void printGroupDetails(Group group){
         System.out.println("group name: " + group.getGroupName() +
                 " Group ID: " + group.getGroupID() +
