@@ -70,6 +70,7 @@ public class User extends Profile {
     private void readEmail(){
         System.out.print("Email: ");
         this.email = App.readString();
+        updateData("users", "email", this.email, "username", this.username);
     }
     protected void emailValidation(String username){
         if ((readUserData(username, "email")) == null){

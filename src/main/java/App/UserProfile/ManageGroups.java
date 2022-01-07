@@ -53,8 +53,7 @@ public class ManageGroups extends ProfileMenu{
         System.out.print("0 to see pending invites or type name of user you want to invite: ");
         String username = App.readString();
         if (username.equals("0")){
-            User user = new User(username);
-            invite.forGroupInvite(group, user);
+            invite.forGroupInvites(group);
         }else{
             Database database = new Database();
             if (database.isUsernameTaken(username) == 1){

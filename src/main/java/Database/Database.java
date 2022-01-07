@@ -35,6 +35,10 @@ public class Database {
         }
         return str;
     }
+    public Integer getIntDataFromDatabase(String table, String whatToGet, String whereKey, String searchValue){
+        String str = getDataFromDatabase(table, whatToGet,whereKey,searchValue);
+        return Integer.parseInt(str);
+    }
     /**
      * checking if provided username is already in the database
      0 - username not found = not taken
@@ -94,11 +98,9 @@ public class Database {
                             "GROUP BY user_groups.groupName \n" +
                             ";");
             resultSet = preparedStatement.executeQuery();
-            int lp = 0;
             while (resultSet.next()) {
-                lp++;
                 String groupName  = resultSet.getString("groupName");
-                System.out.println(lp + ". " + groupName);
+                System.out.println("- " + groupName);
             }
         } catch (Exception e) {
             throw new IllegalStateException("getUserGroups failed!", e);
@@ -138,12 +140,10 @@ public class Database {
                             ";");
             resultSet = preparedStatement.executeQuery();
             System.out.println("Group members: username, userID");
-            int lp = 0;
             while (resultSet.next()) {
-                lp++;
                 String username  = resultSet.getString("username");
                 String id  = resultSet.getString("id");
-                System.out.println(lp + ". " + username + " id#" + id);
+                System.out.println("- " + username + " id#" + id);
             }
         } catch (Exception e) {
             throw new IllegalStateException("getGroupMembers failed!", e);
@@ -207,19 +207,17 @@ public class Database {
         try {
             connectToDatabase();
             preparedStatement = connect
-                    .prepareStatement("SELECT users.username, user_groups.groupName FROM users  \n" +
+                    .prepareStatement("SELECT users.username, user_groups.groupName, pending_invites.id FROM users  \n" +
                             "JOIN pending_invites ON users.id = pending_invites.userID\n" +
                             "JOIN user_groups ON pending_invites.groupID = user_groups.id\n" +
                             "WHERE user_groups.groupName = '" + groupName + "'\n" +
                             "GROUP BY pending_invites.id \n" +
                             ";");
             resultSet = preparedStatement.executeQuery();
-            int lp = 0;
             while (resultSet.next()) {
-                lp++;
                 String username  = resultSet.getString("username");
                 String id  = resultSet.getString("id");
-                System.out.println(lp + ". " + username + " id#" + id);
+                System.out.println("- " + username + " id#" + id);
             }
         } catch (Exception e) {
             throw new IllegalStateException("getPendingApplications failed!", e);
@@ -232,19 +230,17 @@ public class Database {
         try {
             connectToDatabase();
             preparedStatement = connect
-                    .prepareStatement("SELECT users.username, user_groups.groupName FROM users  \n" +
+                    .prepareStatement("SELECT users.username, user_groups.groupName, pending_invites.id FROM users  \n" +
                             "JOIN pending_invites ON users.id = pending_invites.userID\n" +
                             "JOIN user_groups ON pending_invites.groupID = user_groups.id\n" +
-                            "WHERE user_groups.groupName = '" + username + "'\n" +
+                            "WHERE users.username = '" + username + "'\n" +
                             "GROUP BY pending_invites.id \n" +
                             ";");
             resultSet = preparedStatement.executeQuery();
-            int lp = 0;
             while (resultSet.next()) {
-                lp++;
                 String groupName  = resultSet.getString("groupName");
                 String id  = resultSet.getString("id");
-                System.out.println(lp + ". " + groupName + " id#" + id);
+                System.out.println("- " + groupName + " id#" + id);
             }
         } catch (Exception e) {
             throw new IllegalStateException("getPendingInvitations failed!", e);

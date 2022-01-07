@@ -52,7 +52,7 @@ public class ProfileMenu extends Profile {
         System.out.print("0 to see pending invites or type name of group you want to join: ");
         String groupName = App.readString();
         if (groupName.equals("0")){
-            invite.forUserInvite(user);
+            invite.forUserInvites(user);
         }else{
             Database database = new Database();
             if (database.checkForGroup(groupName) == 1){
