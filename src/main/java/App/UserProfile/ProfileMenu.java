@@ -21,8 +21,9 @@ public class ProfileMenu extends Profile {
                 1. my data\s
                 2. change my data\s
                 3. my groups\s
-                4. enter group\s
-                5. create new group\s
+                4. join group\s
+                5. enter group\s
+                6. create new group\s
                 0. logout""");
         menuOptions(user);
     }
@@ -34,8 +35,9 @@ public class ProfileMenu extends Profile {
                 userChange.startUserChange(user);
             }
             case 3 -> printMyGroups(user);
-            case 4 -> enterGroup(user);
-            case 5 -> {
+            case 4 -> joinGroup(user);
+            case 5 -> enterGroup(user);
+            case 6 -> {
                 while(!previousStep) newGroup(user);
             }
             case 0 -> logout();
@@ -45,17 +47,34 @@ public class ProfileMenu extends Profile {
             }
         }
     }
+    private void joinGroup(User user){
+        InviteJoinGroup invite = new InviteJoinGroup();
+        System.out.print("0 to see pending invites or type name of group you want to join: ");
+        String groupName = App.readString();
+        if (groupName.equals("0")){
+            invite.forUserInvites(user);
+        }else{
+            Database database = new Database();
+            if (database.checkForGroup(groupName) == 1){
+                invite.joinGroup(user, groupName);
+            }else System.out.println("no group with provided name");
+        }
+    }
+
     private void enterGroup(User user){
         int choice = chooseGroupToEdit(user);
         if (choice==0){
             previousStep();
         }else {
             Group group = new Group(choice);
-            if (user.getUsername().equals(group.getOwner())) {
+            Database database = new Database();
+
+//            if (user.getUsername().equals(group.getOwner())) {
+            if (database.getGroupMembersList(group.getGroupName()).contains(user.getUsername())) {
                 ManageGroups manageGroups = new ManageGroups();
                 manageGroups.startManageGroups(user, group);
             }else{
-                System.out.println("you are not group owner");
+                System.out.println("wrong ID, please try again");
                 previousStep();
             }
         }

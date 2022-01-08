@@ -1,12 +1,10 @@
 package App.UserProfile;
 
 import App.App;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @Getter
 @Setter
@@ -57,7 +55,7 @@ public class User extends Profile {
     /**
      used only to register user
      */
-    public User(){
+    public void registerUser(){
         readUsername();
         readPassword();
     }
@@ -72,9 +70,10 @@ public class User extends Profile {
     private void readEmail(){
         System.out.print("Email: ");
         this.email = App.readString();
+        updateData("users", "email", this.email, "username", this.username);
     }
     protected void emailValidation(String username){
-        if ((readUserData(username, "email")).isEmpty()){
+        if ((readUserData(username, "email")) == null){
             System.out.println("you do not have email, please update it");
             readEmail();
         }

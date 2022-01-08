@@ -13,9 +13,9 @@ public class ManageGroups extends ProfileMenu{
     private void menageGroups(User user, Group group){
         System.out.println("""
 
-                 what do you want to change?\s
+                 what do you want to do?\s
                 1. see members\s
-                2. add users\s
+                2. add users or pending invites\s
                 3. see group data\s
                 4. change group info\s
                 0. back""");
@@ -28,9 +28,14 @@ public class ManageGroups extends ProfileMenu{
             case 1 -> group.printGroupMembers(groupName);
             case 2 -> addGroupMember(group);
             case 3 -> group.printGroupDetails(group);
-            case 4 -> {
-                GroupChange groupChange = new GroupChange();
-                groupChange.startGroupChange(group);
+            case 5 -> {
+                if (user.getUsername().equals(group.getOwner())) {
+                    GroupChange groupChange = new GroupChange();
+                    groupChange.startGroupChange(group);
+                }else{
+                    System.out.println("you are not group owner");
+//                    previousStep();
+                }
             }
             case 0 -> previousStep();
             default -> {
@@ -44,14 +49,17 @@ public class ManageGroups extends ProfileMenu{
      adding new member to chosen group
      */
     private void addGroupMember(Group group){
-        System.out.print("type username of user you want to add: ");
-        String newMember = App.readString();
-        Database database = new Database();
-        if (database.isUsernameTaken(newMember) == 1){
-            User user = new User(newMember);
-            database.updateStatement(
-                    "INSERT INTO users_to_groups(userID, groupID) " +
-                            "VALUES (" + user.getUserID() + "," + group.getGroupID() + ");");
-        }else System.out.println("addGroupMember failed");
+        InviteJoinGroup invite = new InviteJoinGroup();
+        System.out.print("0 to see pending invites or type name of user you want to invite: ");
+        String username = App.readString();
+        if (username.equals("0")){
+            invite.forGroupInvites(group);
+        }else{
+            Database database = new Database();
+            if (database.isUsernameTaken(username) == 1){
+                invite.sendInvite(group, username);
+            }else System.out.println("addGroupMember failed");
+        }
+
     }
 }

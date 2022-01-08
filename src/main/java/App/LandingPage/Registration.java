@@ -13,6 +13,7 @@ public class Registration {
     private void registerNewUser() {
 //        User user2 = new User("username", "password");
         User user = new User();
+        user.registerUser();
         System.out.println("username from register: " + user.getUsername());
         if (usernameNotUsed(user.getUsername())) {
             System.out.println("you have been added!");
