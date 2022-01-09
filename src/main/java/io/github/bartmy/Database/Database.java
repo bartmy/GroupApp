@@ -1,4 +1,4 @@
-package Database;
+package io.github.bartmy.Database;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
-package App.UserProfile;
+package io.github.bartmy.App.UserProfile;
 
-import App.App;
+import io.github.bartmy.App.App;
 
 public class UserChange extends User{
 
