@@ -1,7 +1,6 @@
 package App;
 
 import App.LandingPage.LandingPage;
-
 import java.util.Scanner;
 
 public class App {
