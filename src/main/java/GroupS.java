@@ -1,5 +1,4 @@
-package App;
-
+import App.App;
 import App.LandingPage.Login;
 
 public class GroupS {

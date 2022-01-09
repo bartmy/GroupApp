@@ -91,7 +91,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>App</mainClass>
+                            <mainClass>/</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
