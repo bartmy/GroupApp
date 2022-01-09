@@ -1,7 +1,5 @@
-package App;
-
 import App.LandingPage.Login;
-
+import org.eclipse.jetty.server.Server;
 
 public class GroupS {
     public static void main(String[] args) throws Exception {
@@ -10,12 +8,9 @@ public class GroupS {
 //        while (App.isProgramOn()){
 //            appStart.startProgram();
 //        }
-
 //
-        Login login = new Login();
-        login.testLogin("bartekm", "haslo");
-
 //        Login login = new Login();
 //        login.testLogin("bartekm", "haslo");
+
     }
 }
