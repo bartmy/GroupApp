@@ -63,9 +63,25 @@
             <version>${slf4jVersion}</version>
         </dependency>
 
+        <!-- http -->
+<!--        <dependency>-->
+<!--            <groupId>org.eclipse.jetty</groupId>-->
+<!--            <artifactId>jetty-server</artifactId>-->
+<!--            <version>${jettyVersion}</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+        </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
+            <artifactId>jetty-plus</artifactId>
+            <version>${jettyVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-annotations</artifactId>
             <version>${jettyVersion}</version>
         </dependency>
 
