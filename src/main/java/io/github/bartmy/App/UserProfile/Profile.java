@@ -1,6 +1,6 @@
-package App.UserProfile;
+package io.github.bartmy.App.UserProfile;
 
-import Database.Database;
+import io.github.bartmy.Database.Database;
 import lombok.*;
 
 @NoArgsConstructor

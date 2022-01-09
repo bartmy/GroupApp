@@ -1,7 +1,7 @@
-package App.UserProfile;
+package io.github.bartmy.App.UserProfile;
 
-import App.App;
-import Database.Database;
+import io.github.bartmy.App.App;
+import io.github.bartmy.Database.Database;
 
 public class InviteJoinGroup {
 

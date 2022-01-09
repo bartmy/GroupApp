@@ -1,6 +1,6 @@
-package App.LandingPage;
+package io.github.bartmy.App.LandingPage;
 
-import App.App;
+import io.github.bartmy.App.App;
 
 public class LandingPage {
 

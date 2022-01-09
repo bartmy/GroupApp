@@ -1,7 +1,7 @@
-package App.LandingPage;
+package io.github.bartmy.App.LandingPage;
 
-import App.UserProfile.User;
-import Database.Database;
+import io.github.bartmy.App.UserProfile.User;
+import io.github.bartmy.Database.Database;
 
 public class Registration {
     Database database = new Database();

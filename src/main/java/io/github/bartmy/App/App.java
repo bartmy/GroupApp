@@ -1,6 +1,6 @@
-package App;
+package io.github.bartmy.App;
 
-import App.LandingPage.LandingPage;
+import io.github.bartmy.App.LandingPage.LandingPage;
 import java.util.Scanner;
 
 public class App {

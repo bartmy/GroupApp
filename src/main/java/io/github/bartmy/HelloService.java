@@ -1,3 +1,5 @@
+package io.github.bartmy;
+
 import java.util.Optional;
 
 public class HelloService {
@@ -5,6 +7,5 @@ public class HelloService {
 
     String prepareGreeting(String name){
         return "Hello " + Optional.ofNullable(name).orElse(FALLBACK_NAME) + "!";
-
     }
 }

@@ -1,5 +1,5 @@
-import App.App;
-import App.LandingPage.Login;
+package io.github.bartmy;
+
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;
@@ -25,15 +25,15 @@ public class GroupS {
                 new WebAppConfiguration()
         });
         webapp.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern", ".*/classes/.*");
-//        webapp.addServlet(HelloServlet.class, "/api/*");
+//        webapp.addServlet(io.github.bartmy.App.App.HelloServlet.class, "/api/*");
         var server = new Server(8080);
         server.setHandler(webapp);
 
         server.start();
         server.join();
 
-//        App appStart = new App();
-//        while (App.isProgramOn()){
+//        io.github.bartmy.App.App appStart = new io.github.bartmy.App.App();
+//        while (io.github.bartmy.App.App.isProgramOn()){
 //            appStart.startProgram();
 //        }
 
