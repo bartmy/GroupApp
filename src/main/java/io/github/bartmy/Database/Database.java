@@ -196,28 +196,48 @@ public class Database {
                 str = resultSet.getString("numberOfMembers");
             }
         } catch (Exception e) {
-            throw new IllegalStateException("getDataFromDatabase failed!", e);
+            throw new IllegalStateException("getGroupSize failed!", e);
         }
         return Integer.parseInt(str);
     }
     /**
      application from users to join certain group
      */
-    public void getPendingApplications(String groupName){
+    public void getInvitesSentToGroup(String groupName){
         try {
             connectToDatabase();
             preparedStatement = connect
-                    .prepareStatement("SELECT users.username, user_groups.groupName, pending_invites.id FROM users  \n" +
+                    .prepareStatement("SELECT users.username, user_groups.groupName, pending_invites.id, pending_invites.inviteSentByUser FROM users  \n" +
                             "JOIN pending_invites ON users.id = pending_invites.userID\n" +
                             "JOIN user_groups ON pending_invites.groupID = user_groups.id\n" +
-                            "WHERE user_groups.groupName = '" + groupName + "'\n" +
+                            "WHERE user_groups.groupName = '" + groupName + "' and , pending_invites.inviteSentByUser = 1\n" +
                             "GROUP BY pending_invites.id \n" +
                             ";");
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String username  = resultSet.getString("username");
                 String id  = resultSet.getString("id");
-                System.out.println("- " + username + " id#" + id);
+                System.out.println("-from: " + username + " id#" + id);
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException("getPendingApplications failed!", e);
+        }
+    }
+    public void getInvitesSentByGroup(String groupName){
+        try {
+            connectToDatabase();
+            preparedStatement = connect
+                    .prepareStatement("SELECT users.username, user_groups.groupName, pending_invites.id, pending_invites.inviteSentByUser FROM users  \n" +
+                            "JOIN pending_invites ON users.id = pending_invites.userID\n" +
+                            "JOIN user_groups ON pending_invites.groupID = user_groups.id\n" +
+                            "WHERE user_groups.groupName = '" + groupName + "' and pending_invites.inviteSentByUser = 0\n" +
+                            "GROUP BY pending_invites.id \n" +
+                            ";");
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String username  = resultSet.getString("username");
+                String id  = resultSet.getString("id");
+                System.out.println("-to: " + username + " id#" + id);
             }
         } catch (Exception e) {
             throw new IllegalStateException("getPendingApplications failed!", e);
@@ -226,21 +246,41 @@ public class Database {
     /**
      invitations of user to join different groups
      */
-    public void getPendingInvitations(String username){
+    public void getInvitesSentToUser(String username){
         try {
             connectToDatabase();
             preparedStatement = connect
-                    .prepareStatement("SELECT users.username, user_groups.groupName, pending_invites.id FROM users  \n" +
+                    .prepareStatement("SELECT users.username, user_groups.groupName, pending_invites.id, pending_invites.inviteSentByUser FROM users  \n" +
                             "JOIN pending_invites ON users.id = pending_invites.userID\n" +
                             "JOIN user_groups ON pending_invites.groupID = user_groups.id\n" +
-                            "WHERE users.username = '" + username + "'\n" +
+                            "WHERE users.username = '" + username + "' and pending_invites.inviteSentByUser = 0\n" +
                             "GROUP BY pending_invites.id \n" +
                             ";");
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String groupName  = resultSet.getString("groupName");
                 String id  = resultSet.getString("id");
-                System.out.println("- " + groupName + " id#" + id);
+                System.out.println("-from " + groupName + " id#" + id);
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException("getPendingInvitations failed!", e);
+        }
+    }
+    public void getInvitesSentByUser(String username){
+        try {
+            connectToDatabase();
+            preparedStatement = connect
+                    .prepareStatement("SELECT users.username, user_groups.groupName, pending_invites.id, pending_invites.inviteSentByUser FROM users  \n" +
+                            "JOIN pending_invites ON users.id = pending_invites.userID\n" +
+                            "JOIN user_groups ON pending_invites.groupID = user_groups.id\n" +
+                            "WHERE users.username = '" + username + "' and pending_invites.inviteSentByUser = 1\n" +
+                            "GROUP BY pending_invites.id \n" +
+                            ";");
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String groupName  = resultSet.getString("groupName");
+                String id  = resultSet.getString("id");
+                System.out.println("-to " + groupName + " id#" + id);
             }
         } catch (Exception e) {
             throw new IllegalStateException("getPendingInvitations failed!", e);
