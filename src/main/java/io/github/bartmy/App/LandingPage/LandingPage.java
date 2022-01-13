@@ -7,13 +7,25 @@ public class LandingPage {
     public void startLandingPage() {
         programMenu();
     }
-    private void programMenu() {
+    public void programMenu() {
         System.out.println("What do you want to do ?");
         System.out.println("""
                 1. login\s
                 2. register\s
                 3. end""");
         menuOptions();
+    }
+    public String menu() {
+//        System.out.println("What do you want to do ?");
+//        System.out.println("""
+//                1. login\s
+//                2. register\s
+//                3. end""");
+//        menuOptions();
+        return """
+                1. login\s
+                2. register\s
+                3. end""";
     }
 
     private void menuOptions() {

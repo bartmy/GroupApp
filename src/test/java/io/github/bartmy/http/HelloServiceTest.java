@@ -1,5 +1,6 @@
-package io.github.bartmy;
+package io.github.bartmy.http;
 
+import io.github.bartmy.http.HelloService;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
