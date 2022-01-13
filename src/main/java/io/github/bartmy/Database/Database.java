@@ -210,7 +210,7 @@ public class Database {
                     .prepareStatement("SELECT users.username, user_groups.groupName, pending_invites.id, pending_invites.inviteSentByUser FROM users  \n" +
                             "JOIN pending_invites ON users.id = pending_invites.userID\n" +
                             "JOIN user_groups ON pending_invites.groupID = user_groups.id\n" +
-                            "WHERE user_groups.groupName = '" + groupName + "' and , pending_invites.inviteSentByUser = 1\n" +
+                            "WHERE user_groups.groupName = '" + groupName + "' and pending_invites.inviteSentByUser = 1\n" +
                             "GROUP BY pending_invites.id \n" +
                             ";");
             resultSet = preparedStatement.executeQuery();
@@ -220,7 +220,7 @@ public class Database {
                 System.out.println("-from: " + username + " id#" + id);
             }
         } catch (Exception e) {
-            throw new IllegalStateException("getPendingApplications failed!", e);
+            throw new IllegalStateException("getInvitesSentToGroup failed!", e);
         }
     }
     public void getInvitesSentByGroup(String groupName){
@@ -240,7 +240,7 @@ public class Database {
                 System.out.println("-to: " + username + " id#" + id);
             }
         } catch (Exception e) {
-            throw new IllegalStateException("getPendingApplications failed!", e);
+            throw new IllegalStateException("getInvitesSentByGroup failed!", e);
         }
     }
     /**
@@ -263,7 +263,7 @@ public class Database {
                 System.out.println("-from " + groupName + " id#" + id);
             }
         } catch (Exception e) {
-            throw new IllegalStateException("getPendingInvitations failed!", e);
+            throw new IllegalStateException("getInvitesSentToUser failed!", e);
         }
     }
     public void getInvitesSentByUser(String username){
@@ -283,7 +283,7 @@ public class Database {
                 System.out.println("-to " + groupName + " id#" + id);
             }
         } catch (Exception e) {
-            throw new IllegalStateException("getPendingInvitations failed!", e);
+            throw new IllegalStateException("getInvitesSentByUser failed!", e);
         }
     }
     /**
