@@ -1,4 +1,4 @@
-package io.github.bartmy;
+package io.github.bartmy.http;
 
 import java.util.Optional;
 

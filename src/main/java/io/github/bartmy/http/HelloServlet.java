@@ -1,4 +1,4 @@
-package io.github.bartmy;
+package io.github.bartmy.http;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
