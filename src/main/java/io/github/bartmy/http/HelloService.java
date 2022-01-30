@@ -10,7 +10,7 @@ import java.util.Optional;
 @Slf4j
 public class HelloService {
     static final  String FALLBACK_NAME = "world";
-    static final Lang FALLBACK_LANG = new Lang(1L, "Hello","en");
+    static final Lang FALLBACK_LANG = new Lang(1, "Hello","en");
 
     private LangRepository repository;
 
@@ -22,9 +22,9 @@ public class HelloService {
     }
 
     String prepareGreeting(String name, String lang){
-        Long langId;
+        Integer langId;
         try {
-            langId = Optional.ofNullable(lang).map(Long::valueOf).orElse(FALLBACK_LANG.getId());
+            langId = Optional.ofNullable(lang).map(Integer::valueOf).orElse(FALLBACK_LANG.getId());
         } catch (NumberFormatException e){
             log.warn("Non-numeric language id used: " + lang);
             langId = FALLBACK_LANG.getId();
