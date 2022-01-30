@@ -1,10 +1,13 @@
 package io.github.bartmy;
 
 import io.github.bartmy.App.LandingPage.Login;
+import io.github.bartmy.App.ToDo.HibernateUtil;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.util.component.AbstractLifeCycle;
+import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.webapp.*;
 
 public class GroupS {
@@ -29,6 +32,12 @@ public class GroupS {
         var server = new Server(8080);
         server.setHandler(webapp);
 
+        server.addEventListener(new AbstractLifeCycle.AbstractLifeCycleListener() {
+            @Override
+            public void lifeCycleStopped(LifeCycle event) {
+                HibernateUtil.close();
+            }
+        });
         server.start();
         server.join();
 

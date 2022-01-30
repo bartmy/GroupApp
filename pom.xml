@@ -86,6 +86,11 @@
             <artifactId>h2-mvstore</artifactId>
             <version>2.1.210</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.6.5.Final</version>
+        </dependency>
     </dependencies>
 
     <build>
