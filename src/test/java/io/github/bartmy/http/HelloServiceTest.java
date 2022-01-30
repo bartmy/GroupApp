@@ -42,7 +42,10 @@ public class HelloServiceTest {
     public void test_prepareGreeting_nonExistingLang_returnsGreetingWithFallbackLang() {
         //given
         var mockRepository = new LangRepository(){
-
+            @Override
+            public Optional<Lang> findById(Long id) {
+                return Optional.empty();
+            }
         };
         var SUT = new HelloService(mockRepository);
 
