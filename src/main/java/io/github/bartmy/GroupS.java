@@ -27,6 +27,7 @@ public class GroupS {
                 new JettyWebXmlConfiguration(),
                 new WebAppConfiguration()
         });
+//        webapp.setInitParameter("org.eclipse.jetty.servlet.Default.maxCachedFiles", "0");
         webapp.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern", ".*/classes/.*");
 //        webapp.addServlet(io.github.bartmy.App.App.HelloServlet.class, "/api/*");
         var server = new Server(8080);
