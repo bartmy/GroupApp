@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Slf4j
 @WebServlet(name = "Hello", urlPatterns = {"/api"})
@@ -33,7 +34,14 @@ public class HelloServlet extends HttpServlet {
         log.info("Got request with parameters " + req.getParameterMap());
         var name = req.getParameter(NAME_PARAM);
         var lang = req.getParameter(LANG_PARAM);
-        resp.getWriter().write(service.prepareGreeting(name, lang));
+        Integer langId = null;
+        try {
+            langId = Integer.valueOf(lang);
+        } catch (NumberFormatException e){
+            log.warn("Non-numeric language id used: " + lang);
+
+        }
+        resp.getWriter().write(service.prepareGreeting(name, langId));
     }
 }
 
