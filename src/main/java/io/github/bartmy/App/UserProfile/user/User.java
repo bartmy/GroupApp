@@ -1,6 +1,7 @@
-package io.github.bartmy.App.UserProfile;
+package io.github.bartmy.App.UserProfile.user;
 
 import io.github.bartmy.App.App;
+import io.github.bartmy.App.UserProfile.Profile;
 import lombok.*;
 
 @AllArgsConstructor
@@ -17,14 +18,14 @@ public class User extends Profile {
     private String email = null;
 
 
-    protected User(String username, String password){
+    public User(String username, String password){
         this.username = username;
         this.password = password;
         this.displayName = readUserData(username, "displayName");
         this.email = readUserData(username, "email");
         setID(username);
     }
-    protected User(String username){
+    public User(String username){
         this.username = username;
         this.password = readUserData(username, "password");
         this.displayName = readUserData(username, "displayName");
@@ -33,7 +34,7 @@ public class User extends Profile {
     }
 
 
-    protected void printMyData(){
+    public void printMyData(){
         System.out.println("username: " + getUsername() + "\n" +
                 "password: " + getPassword() + "\n" +
                 "displayName: " + getDisplayName() + "\n" +
@@ -72,7 +73,7 @@ public class User extends Profile {
         this.email = App.readString();
         updateData("users", "email", this.email, "username", this.username);
     }
-    protected void emailValidation(String username){
+    public void emailValidation(String username){
         if ((readUserData(username, "email")) == null){
             System.out.println("you do not have email, please update it");
             readEmail();

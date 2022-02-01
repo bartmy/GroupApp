@@ -1,6 +1,6 @@
-package io.github.bartmy.App.LandingPage;
+package io.github.bartmy.App.LandingPage.registration;
 
-import io.github.bartmy.App.UserProfile.User;
+import io.github.bartmy.App.UserProfile.user.User;
 import io.github.bartmy.Database.Database;
 
 public class Registration {

@@ -1,6 +1,11 @@
 package io.github.bartmy.App.UserProfile;
 
 import io.github.bartmy.App.App;
+import io.github.bartmy.App.UserProfile.group.Group;
+import io.github.bartmy.App.UserProfile.group.InviteJoinGroup;
+import io.github.bartmy.App.UserProfile.group.ManageGroups;
+import io.github.bartmy.App.UserProfile.user.User;
+import io.github.bartmy.App.UserProfile.user.UserChange;
 import io.github.bartmy.Database.Database;
 import lombok.*;
 

@@ -1,6 +1,7 @@
-package io.github.bartmy.App.UserProfile;
+package io.github.bartmy.App.UserProfile.group;
 
 import io.github.bartmy.App.App;
+import io.github.bartmy.App.UserProfile.user.User;
 import io.github.bartmy.Database.Database;
 
 public class InviteJoinGroup {
@@ -17,7 +18,7 @@ public class InviteJoinGroup {
             throw new IllegalStateException("sendInvite failed", e);
         }
     }
-    protected void joinGroup(User user, String groupName){
+    public void joinGroup(User user, String groupName){
         try {
             Group group = new Group(groupName);
             Database database = new Database();
@@ -123,7 +124,7 @@ public class InviteJoinGroup {
         int choice = inviteChoice();
         takeActionOnInvite(group, choice);
     }
-    protected void forUserInvites(User user){
+    public void forUserInvites(User user){
         getUserPendingInvites(user);
         int choice = inviteChoice();
         takeActionOnInvite(user, choice);
