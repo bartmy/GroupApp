@@ -55,14 +55,14 @@ public class Group extends Profile {
         this.owner = user.getUsername();
         addGroupToDatabase(getGroupName(), getOwner());
         getGroupID(getGroupName());
-        linkGroupToUser(user.getUserID(), getGroupID());
+        linkGroupToUser(user.getId(), getGroupID());
     }
     public Group(User user, String groupName){
         this.groupName = groupName;
         this.owner = user.getUsername();
         addGroupToDatabase(getGroupName(), getOwner());
         getGroupID(getGroupName());
-        linkGroupToUser(user.getUserID(), getGroupID());
+        linkGroupToUser(user.getId(), getGroupID());
     }
     private void takeGroupName(){
         System.out.print("Group name: ");
