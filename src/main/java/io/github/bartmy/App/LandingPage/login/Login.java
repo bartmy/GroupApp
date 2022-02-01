@@ -1,4 +1,4 @@
-package io.github.bartmy.App.LandingPage;
+package io.github.bartmy.App.LandingPage.login;
 
 import io.github.bartmy.App.App;
 import io.github.bartmy.App.UserProfile.Profile;

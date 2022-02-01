@@ -1,11 +1,13 @@
-package io.github.bartmy.App.UserProfile;
+package io.github.bartmy.App.UserProfile.group;
 
 import io.github.bartmy.App.App;
+import io.github.bartmy.App.UserProfile.ProfileMenu;
+import io.github.bartmy.App.UserProfile.user.User;
 import io.github.bartmy.Database.Database;
 
-public class ManageGroups extends ProfileMenu{
+public class ManageGroups extends ProfileMenu {
 
-    protected void startManageGroups(User user, Group group){
+    public void startManageGroups(User user, Group group){
         while(!previousStep){
             menageGroups(user, group);
         }

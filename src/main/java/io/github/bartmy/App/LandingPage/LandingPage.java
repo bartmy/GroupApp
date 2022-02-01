@@ -1,6 +1,8 @@
 package io.github.bartmy.App.LandingPage;
 
 import io.github.bartmy.App.App;
+import io.github.bartmy.App.LandingPage.login.Login;
+import io.github.bartmy.App.LandingPage.registration.Registration;
 
 public class LandingPage {
 

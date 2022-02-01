@@ -1,6 +1,8 @@
-package io.github.bartmy.App.UserProfile;
+package io.github.bartmy.App.UserProfile.group;
 
 import io.github.bartmy.App.App;
+import io.github.bartmy.App.UserProfile.Profile;
+import io.github.bartmy.App.UserProfile.user.User;
 import io.github.bartmy.Database.Database;
 import lombok.*;
 
@@ -19,7 +21,7 @@ public class Group extends Profile {
         this.owner = readGroupData(groupName,"owner");
         getGroupID(groupName);
     }
-    protected Group(Integer groupID){
+    public Group(Integer groupID){
         this.groupID = groupID;
         this.groupName = readData("user_groups", "groupName", "id", ""+groupID);
         this.owner = readGroupData(groupName,"owner");
@@ -38,7 +40,7 @@ public class Group extends Profile {
                 " Group ID: " + group.getGroupID() +
                 " owner: " + group.getOwner());
     }
-    protected void printUsersGroups(String username){
+    public void printUsersGroups(String username){
         Database database = new Database();
         database.getUserGroups(username);
     }
@@ -55,7 +57,7 @@ public class Group extends Profile {
         getGroupID(getGroupName());
         linkGroupToUser(user.getUserID(), getGroupID());
     }
-    protected Group(User user, String groupName){
+    public Group(User user, String groupName){
         this.groupName = groupName;
         this.owner = user.getUsername();
         addGroupToDatabase(getGroupName(), getOwner());

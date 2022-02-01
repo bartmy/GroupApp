@@ -1,10 +1,10 @@
-package io.github.bartmy.App.UserProfile;
+package io.github.bartmy.App.UserProfile.user;
 
 import io.github.bartmy.App.App;
 
 public class UserChange extends User{
 
-    protected void startUserChange(User user){
+    public void startUserChange(User user){
         while(!previousStep){
             changeUserMenu(user);
         }

@@ -1,5 +1,7 @@
 package io.github.bartmy.App.UserProfile;
 
+import io.github.bartmy.App.UserProfile.group.Group;
+import io.github.bartmy.App.UserProfile.user.User;
 import io.github.bartmy.Database.Database;
 import lombok.*;
 

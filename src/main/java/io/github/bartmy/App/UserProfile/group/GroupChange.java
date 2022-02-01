@@ -1,4 +1,4 @@
-package io.github.bartmy.App.UserProfile;
+package io.github.bartmy.App.UserProfile.group;
 
 import io.github.bartmy.App.App;
 
