@@ -12,7 +12,7 @@ public class Registration {
 
     private void registerNewUser() {
 //        User user2 = new User("username", "password");
-        User user = new User();
+        User user = new User(1);
         user.registerUser();
         System.out.println("username from register: " + user.getUsername());
         if (usernameNotUsed(user.getUsername())) {

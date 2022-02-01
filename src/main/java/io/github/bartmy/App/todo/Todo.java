@@ -6,6 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.*;
+
+@Getter
+@Setter
 
 @Entity
 @Table(name = "todos")
@@ -23,24 +27,5 @@ class Todo {
      */
     @SuppressWarnings("unused")
     Todo() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    public String getText() {
-        return text;
-    }
-    public void setText(String text) {
-        this.text = text;
-    }
-    public boolean isDone() {
-        return done;
-    }
-    public void setDone(boolean done) {
-        this.done = done;
     }
 }

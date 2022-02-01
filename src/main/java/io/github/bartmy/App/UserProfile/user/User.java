@@ -3,19 +3,36 @@ package io.github.bartmy.App.UserProfile.user;
 import io.github.bartmy.App.App;
 import io.github.bartmy.App.UserProfile.Profile;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 @Getter
 @Setter
 
+@Entity
+@Table(name = "users")
 public class User extends Profile {
+
+    @Id
+    @GeneratedValue(generator="inc")
+    @GenericGenerator(name="inc", strategy = "increment")
+    private int id;
     private String username;
     private String password;
-    private int userID;
     private String displayName = null;
     private String email = null;
+
+
+    /**
+     * Hibernate (JPA) needs it.
+     */
+    @SuppressWarnings("unused")
+    User() {
+    }
 
 
     public User(String username, String password){
@@ -50,12 +67,15 @@ public class User extends Profile {
      */
     private void setID(String username){
         String id = readUserData(username, "id");
-        this.userID = Integer.parseInt(id);
+        this.id = Integer.parseInt(id);
     }
 
     /**
      used only to register user
      */
+
+    public User(Integer thisValueDoesNothing){
+    }
     public void registerUser(){
         readUsername();
         readPassword();
