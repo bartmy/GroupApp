@@ -24,6 +24,7 @@ public class App {
     public static Integer readInt(){
         Scanner read = new Scanner(System.in);
         return read.nextInt();
+    
     }
     public static void wrongChoice(){
         System.out.println("did not recognize, try again!");

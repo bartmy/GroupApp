@@ -1,4 +1,4 @@
-package io.github.bartmy.App.ToDo;
+package io.github.bartmy.App.util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -13,7 +13,7 @@ public class HibernateUtil {
             sessionFactory.close();
         }
     }
-    static SessionFactory getSessionFactory(){
+    public static SessionFactory getSessionFactory(){
         return sessionFactory;
     }
 

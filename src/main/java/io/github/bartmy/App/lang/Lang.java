@@ -1,4 +1,4 @@
-package io.github.bartmy.App.ToDo;
+package io.github.bartmy.App.lang;
 
 import org.hibernate.annotations.GenericGenerator;
 

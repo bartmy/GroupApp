@@ -1,7 +1,6 @@
 package io.github.bartmy;
 
-import io.github.bartmy.App.LandingPage.Login;
-import io.github.bartmy.App.ToDo.HibernateUtil;
+import io.github.bartmy.App.util.HibernateUtil;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;
@@ -27,6 +26,7 @@ public class GroupS {
                 new JettyWebXmlConfiguration(),
                 new WebAppConfiguration()
         });
+//        webapp.setInitParameter("org.eclipse.jetty.servlet.Default.maxCachedFiles", "0");
         webapp.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern", ".*/classes/.*");
 //        webapp.addServlet(io.github.bartmy.App.App.HelloServlet.class, "/api/*");
         var server = new Server(8080);
