@@ -12,24 +12,37 @@
   </head>
   <body>
     <form id="welcomeForm" class="pure-form" style="width: 40%; margin: 0 auto">
-      <input
-        type="text"
-        class="pure-input-rounded"
-        name="name"
-        placeholder="name"
-      />
-      <label class="pure-radio">
-        <input type="radio" name="lang" value="1" checked="" />
-        🇺🇸
-      </label>
-      <label class="pure-radio">
-        <input type="radio" name="lang" value="2" />
-        🇵🇱
-      </label>
+      <input type="text" class="pure-input-rounded" name="name" placeholder="name">
+      <fieldset id="langs"></fieldset>
       <button id="btn" class="pure-button pure-button-primary">Submit</button>
     </form>
     <div id="welcome" style="width: 40%; margin: 0 auto"></div>
     <script>
+      const API_URL = 'http://localhost:8080/api';
+
+      const COND_TO_EMOJI = {
+        'pl': '🇵🇱',
+        'en': '🇺🇸',
+        'de': '🇩🇪'
+      }
+      fetch(`${API_URL}/langs`)
+        .then(response => response.json())
+        .then((langArr) => { 
+          /* 
+          l = {
+            id: number,
+            code: string
+          }
+          */
+          const checkboxes = langArr.map(l => `
+          <label class="pure-radio">
+              <input type="radio" name="lang" value="${l.id}">
+                ${COND_TO_EMOJI[l.code]}
+          </label>
+          `).join('\n');
+          document.getElementById('langs').innerHTML = checkboxes;
+        });
+
       const div = document.getElementById("welcome");
       const form = document.getElementById("welcomeForm");
 
@@ -39,7 +52,7 @@
           name: form.elements.name.value,
           lang: form.elements.lang.value,
         };
-        fetch("http://localhost:8080/api?" + new URLSearchParams(formObj))
+        fetch(`${API_URL}?${new URLSearchParams(formObj)}`)
           .then((response) => response.text())
           .then((text) => {
             div.innerHTML = `

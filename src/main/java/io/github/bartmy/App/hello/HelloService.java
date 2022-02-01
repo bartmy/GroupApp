@@ -1,7 +1,7 @@
-package io.github.bartmy.http;
+package io.github.bartmy.App.hello;
 
-import io.github.bartmy.App.ToDo.Lang;
-import io.github.bartmy.App.ToDo.LangRepository;
+import io.github.bartmy.App.lang.Lang;
+import io.github.bartmy.App.lang.LangRepository;
 import lombok.extern.slf4j.Slf4j;
 
 

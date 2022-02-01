@@ -1,7 +1,6 @@
 package io.github.bartmy;
 
-import io.github.bartmy.App.LandingPage.Login;
-import io.github.bartmy.App.ToDo.HibernateUtil;
+import io.github.bartmy.App.util.HibernateUtil;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;

@@ -35,7 +35,7 @@
         <property name="hbm2ddl.auto">validate</property>
 
         <!-- Names the annotated entity class -->
-        <mapping class="io.github.bartmy.App.ToDo.Lang"/>
+        <mapping class="io.github.bartmy.App.lang.Lang"/>
 
     </session-factory>
 
