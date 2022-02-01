@@ -21,7 +21,7 @@ public class Profile {
      */
     protected void printMyGroups(User user){
         System.out.println("My groups");
-        Group group = new Group();
+        Group group = new Group(1,2);
         group.printUsersGroups(user.getUsername());
     }
 

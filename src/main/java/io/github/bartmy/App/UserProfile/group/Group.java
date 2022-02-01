@@ -5,26 +5,45 @@ import io.github.bartmy.App.UserProfile.Profile;
 import io.github.bartmy.App.UserProfile.user.User;
 import io.github.bartmy.Database.Database;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
-@NoArgsConstructor
-@ToString
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 @Getter
 @Setter
 
+@Entity
+@Table(name = "user_groups")
 public class Group extends Profile {
-    private int groupID;
+
+    @Id
+    @GeneratedValue(generator="inc")
+    @GenericGenerator(name="inc", strategy = "increment")
+    private int id;
     private String groupName ="";
     private String owner;
+
+    /**
+     * Hibernate (JPA) needs it.
+     */
+    @SuppressWarnings("unused")
+    Group() {
+    }
 
     protected Group(String groupName){
         this.groupName = groupName;
         this.owner = readGroupData(groupName,"owner");
-        getGroupID(groupName);
+        getId(groupName);
     }
     public Group(Integer groupID){
-        this.groupID = groupID;
+        this.id = groupID;
         this.groupName = readData("user_groups", "groupName", "id", ""+groupID);
         this.owner = readGroupData(groupName,"owner");
+    }
+    public Group(Integer thisValueDoesNothing, Integer needTwoValues){
     }
 
     protected void printGroupMembers(String groupName){
@@ -37,7 +56,7 @@ public class Group extends Profile {
     }
     protected void printGroupDetails(Group group){
         System.out.println("group name: " + group.getGroupName() +
-                " Group ID: " + group.getGroupID() +
+                " Group ID: " + group.getId() +
                 " owner: " + group.getOwner());
     }
     public void printUsersGroups(String username){
@@ -54,15 +73,15 @@ public class Group extends Profile {
         takeGroupName();
         this.owner = user.getUsername();
         addGroupToDatabase(getGroupName(), getOwner());
-        getGroupID(getGroupName());
-        linkGroupToUser(user.getId(), getGroupID());
+        getId(getGroupName());
+        linkGroupToUser(user.getId(), this.getId());
     }
     public Group(User user, String groupName){
         this.groupName = groupName;
         this.owner = user.getUsername();
         addGroupToDatabase(getGroupName(), getOwner());
-        getGroupID(getGroupName());
-        linkGroupToUser(user.getId(), getGroupID());
+        getId(getGroupName());
+        linkGroupToUser(user.getId(), this.getId());
     }
     private void takeGroupName(){
         System.out.print("Group name: ");
@@ -84,8 +103,8 @@ public class Group extends Profile {
     /**
      created due to method readData work only for Strings
      */
-    private void getGroupID(String groupName){
+    private void getId(String groupName){
         String id = readGroupData(groupName, "id");
-        this.groupID = Integer.parseInt(id);
+        this.id = Integer.parseInt(id);
     }
 }

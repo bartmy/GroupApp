@@ -12,7 +12,7 @@ public class InviteJoinGroup {
             Database database = new Database();
             database.updateStatement(
                     "INSERT INTO pending_invites(userID, groupID, inviteSentByUser) " +
-                            "VALUES (" + user.getId() + "," + group.getGroupID() + ", 0);"); //0 is for inviteSentByUser to be false
+                            "VALUES (" + user.getId() + "," + group.getId() + ", 0);"); //0 is for inviteSentByUser to be false
             System.out.println("invite sent to " + user.getUsername() + " to join '" + group.getGroupName() + " ");
         }catch (Exception e) {
             throw new IllegalStateException("sendInvite failed", e);
@@ -24,7 +24,7 @@ public class InviteJoinGroup {
             Database database = new Database();
             database.updateStatement(
                     "INSERT INTO pending_invites(userID, groupID, inviteSentByUser) " +
-                            "VALUES (" + user.getId() + "," + group.getGroupID() + ", 1);"); //1 is for inviteSentByUser to be true
+                            "VALUES (" + user.getId() + "," + group.getId() + ", 1);"); //1 is for inviteSentByUser to be true
             System.out.println("invite sent from " + user.getUsername() + " to join group '" + group.getGroupName() + "' ");
         }catch (Exception e) {
             throw new IllegalStateException("joinGroup failed", e);
@@ -37,10 +37,10 @@ public class InviteJoinGroup {
                     "pending_invites", "userID", "id", ""+id);
             database.updateStatement(
                     "INSERT INTO users_to_groups(userID, groupID) " +
-                        "VALUES (" + userID + "," + group.getGroupID() + ");");
+                        "VALUES (" + userID + "," + group.getId() + ");");
             database.updateStatement(
                     "DELETE FROM pending_invites\n" +
-                        "where id = " + id + " and userID = " + userID + " and groupID = " + group.getGroupID() + ";");
+                        "where id = " + id + " and userID = " + userID + " and groupID = " + group.getId() + ";");
             System.out.println("approved");
         }catch (Exception e) {
             System.out.println("acceptInvite failed");
@@ -78,7 +78,7 @@ public class InviteJoinGroup {
             Database database = new Database();
             database.updateStatement(
                     "DELETE FROM pending_invites\n" +
-                        "where id = " + id + " and groupID = " + group.getGroupID() + ";");
+                        "where id = " + id + " and groupID = " + group.getId() + ";");
             System.out.println("rejected");
         }catch (Exception e) {
             System.out.println("rejectInvite failed");
