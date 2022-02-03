@@ -9,7 +9,7 @@ import org.eclipse.jetty.util.component.AbstractLifeCycle;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.webapp.*;
 
-public class GroupS {
+public class GroupApp {
     public static void main(String[] args) throws Exception {
 
         var webapp = new WebAppContext();
